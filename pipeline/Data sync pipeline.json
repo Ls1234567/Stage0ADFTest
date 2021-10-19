@@ -3,9 +3,16 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "SelectedJob sync",
+				"name": "Temp_SelectedJob sync",
 				"type": "AzureDataExplorerCommand",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Create table Temp_SelectedJob",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -15,49 +22,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".append SelectedJob with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "TaskRunningState sync",
-				"type": "AzureDataExplorerCommand",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"command": ".append TaskRunningState with(tags='[\"test\"]') <|\n    CIS_Metadata_Task\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | join kind=inner WorkloadMapping\n        on $left.DisplayName1 == $right.DisplayName\n    | join kind=inner ServiceTime\n        on $left.DisplayName == $right.ServiceName and $left.DisplayName1 == $right.JobDisplayName\n    | where RootId == ParentId and RootId != \"\" and StateName1 != 'Finished'\n    | order by DisplayName1, DisplayName\n    | project\n        Timestamp1,\n        TaskName=DisplayName,\n        WorkflowName=Workflow,\n        StateName1,\n        JobId,\n        ServiceTime,\n        ParentId,\n        MdmId,\n        Workload=WorkloadDisplay,\n        DurationHour,\n        DurationMinute,\n        DurationSecond,\n        NeedTime",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "MonthIncidentCounts sync",
-				"type": "AzureDataExplorerCommand",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"command": ".append MonthIncidentCounts with(tags='[\"test\"]') <|\n(\n(\nCIS_Metadata_Incident\n| join kind=inner CIS_Metadata_Job\n    on JobId\n| where ParentId != '' and ParentId == RootId\n| project\n    Times=CreatedDate1,\n    Year=toint(getyear(CreatedDate1)),\n    Month=toint(getmonth(CreatedDate1)),\n    WorkloadId=JobId)\n| union (\n    CIS_Metadata_Incident\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | where ParentId != RootId\n    | project\n        Times=CreatedDate1,\n        Year=toint(getyear(CreatedDate1)),\n        Month=toint(getmonth(CreatedDate1)),\n        WorkloadId=ParentId))\n| summarize Count=count() by Year, Month, WorkloadId\n| order by Year, Month\n| join kind=inner CIS_Metadata_Job\n    on $left.WorkloadId == $right.JobId\n| join kind=inner CIS_Metadata_Job\n    on $left.ParentId == $right.JobId\n| join kind=inner WorkloadMapping\n    on DisplayName\n| project Timestamp=CreatedDate1, WorkloadId, RootId, MdmId, Workload=WorkloadDisplay, Year, Month, Count",
+					"command": ".append Temp_SelectedJob with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -79,6 +44,62 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": ".create-merge table Temp_SelectedJob (JobId:string, ParentId:string, RootId:string, DisplayName:string, Cloud:string, Tenant:string, ServiceHostCapability:string, CreatedDate:datetime, StartDate:datetime, FinishDate:datetime, StateName:string, PackageId:string, Workflow:string, HostName:string, ServiceHostLocation:string, Timestamp:datetime, Notes:string, IsBlockingPathCandidate:string, IsBlockingPathPresent:string, ComponentOwnerId:string, OwningTeamId:string, Client:string, ParametersJson:string, SettingsJson:string, MdmId:string, TotalTaskCount:int, FinishedTaskCount:int, BlockedTaskCount:int, FinishTaskPercentage:real, FinishTaskProgress:string, WorkflowName:string, WorkloadDisplay:string, WorkloadName:string)  \n",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap SelectedJob and Temp_SelectedJob",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Temp_SelectedJob sync",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".rename tables SelectedJob=Temp_SelectedJob ifexists, Temp_SelectedJob=SelectedJob",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Delete Temp_SelectedJob",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Swap SelectedJob and Temp_SelectedJob",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".drop table Temp_SelectedJob ifexists",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {

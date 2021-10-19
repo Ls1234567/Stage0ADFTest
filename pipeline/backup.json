@@ -1,0 +1,50 @@
+{
+	"name": "backup",
+	"properties": {
+		"activities": [
+			{
+				"name": "TaskRunningState sync",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".append TaskRunningState with(tags='[\"test\"]') <|\n    CIS_Metadata_Task\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | join kind=inner WorkloadMapping\n        on $left.DisplayName1 == $right.DisplayName\n    | join kind=inner ServiceTime\n        on $left.DisplayName == $right.ServiceName and $left.DisplayName1 == $right.JobDisplayName\n    | where RootId == ParentId and RootId != \"\" and StateName1 != 'Finished'\n    | order by DisplayName1, DisplayName\n    | project\n        Timestamp1,\n        TaskName=DisplayName,\n        WorkflowName=Workflow,\n        StateName1,\n        JobId,\n        ServiceTime,\n        ParentId,\n        MdmId,\n        Workload=WorkloadDisplay,\n        DurationHour,\n        DurationMinute,\n        DurationSecond,\n        NeedTime",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "MonthIncidentCounts sync",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".append MonthIncidentCounts with(tags='[\"test\"]') <|\n(\n(\nCIS_Metadata_Incident\n| join kind=inner CIS_Metadata_Job\n    on JobId\n| where ParentId != '' and ParentId == RootId\n| project\n    Times=CreatedDate1,\n    Year=toint(getyear(CreatedDate1)),\n    Month=toint(getmonth(CreatedDate1)),\n    WorkloadId=JobId)\n| union (\n    CIS_Metadata_Incident\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | where ParentId != RootId\n    | project\n        Times=CreatedDate1,\n        Year=toint(getyear(CreatedDate1)),\n        Month=toint(getmonth(CreatedDate1)),\n        WorkloadId=ParentId))\n| summarize Count=count() by Year, Month, WorkloadId\n| order by Year, Month\n| join kind=inner CIS_Metadata_Job\n    on $left.WorkloadId == $right.JobId\n| join kind=inner CIS_Metadata_Job\n    on $left.ParentId == $right.JobId\n| join kind=inner WorkloadMapping\n    on DisplayName\n| project Timestamp=CreatedDate1, WorkloadId, RootId, MdmId, Workload=WorkloadDisplay, Year, Month, Count",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
