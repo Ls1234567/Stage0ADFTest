@@ -37,7 +37,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('GetTables').Output.value.TableName",
+						"value": "@activity('GetTables').Output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -54,7 +54,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"command": "@{item().Database} | take 10",
+								"command": "@{item().TableName} | take 10",
 								"commandTimeout": "00:20:00"
 							},
 							"linkedServiceName": {
