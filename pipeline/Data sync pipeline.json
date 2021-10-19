@@ -136,7 +136,7 @@
 				}
 			},
 			{
-				"name": "MonthIncidentCounts sync",
+				"name": "Temp_MonthIncidentCounts sync",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
@@ -155,7 +155,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".append MonthIncidentCounts with(tags='[\"test\"]') <|\n(\n(\nCIS_Metadata_Incident\n| join kind=inner CIS_Metadata_Job\n    on JobId\n| where ParentId != '' and ParentId == RootId\n| project\n    Times=CreatedDate1,\n    Year=toint(getyear(CreatedDate1)),\n    Month=toint(getmonth(CreatedDate1)),\n    WorkloadId=JobId)\n| union (\n    CIS_Metadata_Incident\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | where ParentId != RootId\n    | project\n        Times=CreatedDate1,\n        Year=toint(getyear(CreatedDate1)),\n        Month=toint(getmonth(CreatedDate1)),\n        WorkloadId=ParentId))\n| summarize Count=count() by Year, Month, WorkloadId\n| order by Year, Month\n| join kind=inner CIS_Metadata_Job\n    on $left.WorkloadId == $right.JobId\n| join kind=inner CIS_Metadata_Job\n    on $left.ParentId == $right.JobId\n| join kind=inner WorkloadMapping\n    on DisplayName\n| project Timestamp=CreatedDate1, WorkloadId, RootId, MdmId, Workload=WorkloadDisplay, Year, Month, Count",
+					"command": ".append Temp_MonthIncidentCounts with(tags='[\"test\"]') <|\n(\n(\nCIS_Metadata_Incident\n| join kind=inner CIS_Metadata_Job\n    on JobId\n| where ParentId != '' and ParentId == RootId\n| project\n    Times=CreatedDate1,\n    Year=toint(getyear(CreatedDate1)),\n    Month=toint(getmonth(CreatedDate1)),\n    WorkloadId=JobId)\n| union (\n    CIS_Metadata_Incident\n    | join kind=inner CIS_Metadata_Job\n        on JobId\n    | where ParentId != RootId\n    | project\n        Times=CreatedDate1,\n        Year=toint(getyear(CreatedDate1)),\n        Month=toint(getmonth(CreatedDate1)),\n        WorkloadId=ParentId))\n| summarize Count=count() by Year, Month, WorkloadId\n| order by Year, Month\n| join kind=inner CIS_Metadata_Job\n    on $left.WorkloadId == $right.JobId\n| join kind=inner CIS_Metadata_Job\n    on $left.ParentId == $right.JobId\n| join kind=inner WorkloadMapping\n    on DisplayName\n| project Timestamp=CreatedDate1, WorkloadId, RootId, MdmId, Workload=WorkloadDisplay, Year, Month, Count",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -266,7 +266,7 @@
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "MonthIncidentCounts sync",
+						"activity": "Temp_MonthIncidentCounts sync",
 						"dependencyConditions": [
 							"Succeeded"
 						]
