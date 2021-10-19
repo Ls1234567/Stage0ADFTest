@@ -1,0 +1,9 @@
+{
+	"name": "Stage0DataSync",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "278cbf8d-7341-4c49-bc0f-087b21805e44",
+		"tenantId": "cdc5aeea-15c5-4db6-b079-fcadd2505dc2"
+	}
+}
