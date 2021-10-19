@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "GetTables",
+				"name": "SelectedJob sync",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".append SelectedJobTest with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
+					"command": ".append SelectedJob with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
