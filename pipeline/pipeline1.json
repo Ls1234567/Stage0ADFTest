@@ -15,54 +15,12 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".show tables",
+					"command": ".append SelectedJobTest with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
 					"referenceName": "M365OpsCenterInt",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "ForEachTable",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "GetTables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('GetTables').Output.value",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Azure Data Explorer Command1",
-							"type": "AzureDataExplorerCommand",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"command": "@{item().TableName} | take 10",
-								"commandTimeout": "00:20:00"
-							},
-							"linkedServiceName": {
-								"referenceName": "M365OpsCenterInt",
-								"type": "LinkedServiceReference"
-							}
-						}
-					]
 				}
 			}
 		],
