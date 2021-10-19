@@ -1,5 +1,5 @@
 {
-	"name": "BuildoutStatus",
+	"name": "CIS_Metadata_Job",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "M365OpsCenterInt",
