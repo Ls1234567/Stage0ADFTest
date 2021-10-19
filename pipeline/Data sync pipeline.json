@@ -64,6 +64,27 @@
 					"referenceName": "M365OpsCenterInt",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Create table Temp_SelectedJob",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".create-merge table Temp_SelectedJob (JobId:string, ParentId:string, RootId:string, DisplayName:string, Cloud:string, Tenant:string, ServiceHostCapability:string, CreatedDate:datetime, StartDate:datetime, FinishDate:datetime, StateName:string, PackageId:string, Workflow:string, HostName:string, ServiceHostLocation:string, Timestamp:datetime, Notes:string, IsBlockingPathCandidate:string, IsBlockingPathPresent:string, ComponentOwnerId:string, OwningTeamId:string, Client:string, ParametersJson:string, SettingsJson:string, MdmId:string, TotalTaskCount:int, FinishedTaskCount:int, BlockedTaskCount:int, FinishTaskPercentage:real, FinishTaskProgress:string, WorkflowName:string, WorkloadDisplay:string, WorkloadName:string)  \n",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
