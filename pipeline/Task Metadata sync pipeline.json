@@ -24,7 +24,7 @@
 				}
 			},
 			{
-				"name": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
@@ -43,7 +43,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".rename tables CIS_Metadata_Job=Temp_CIS_Metadata_Job ifexists, Temp_CIS_Metadata_Job=CIS_Metadata_Job",
+					"command": ".rename tables CIS_Metadata_Task=Temp_CIS_Metadata_Task ifexists, Temp_CIS_Metadata_Task=CIS_Metadata_Task",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -52,11 +52,11 @@
 				}
 			},
 			{
-				"name": "Clear table Temp_CIS_Metadata_Job",
+				"name": "Clear table Temp_CIS_Metadata_Task",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+						"activity": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -71,7 +71,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".clear table Temp_CIS_Metadata_Job data",
+					"command": ".clear table Temp_CIS_Metadata_Task data",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -114,6 +114,18 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "TaskId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "TaskId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
 									"name": "JobId",
 									"type": "String",
 									"physicalType": "nvarchar"
@@ -126,24 +138,12 @@
 							},
 							{
 								"source": {
-									"name": "ParentId",
+									"name": "TaskName",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "ParentId",
-									"type": "String",
-									"physicalType": "string"
-								}
-							},
-							{
-								"source": {
-									"name": "RootId",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "RootId",
+									"name": "TaskName",
 									"type": "String",
 									"physicalType": "string"
 								}
@@ -162,36 +162,48 @@
 							},
 							{
 								"source": {
-									"name": "Cloud",
+									"name": "ExternalId",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "Cloud",
+									"name": "ExternalId",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "Tenant",
+									"name": "ExternalSystemType",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "Tenant",
+									"name": "ExternalSystemType",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "ServiceHostCapability",
+									"name": "Component",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "ServiceHostCapability",
+									"name": "Component",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "OrderId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "OrderId",
 									"type": "String",
 									"physicalType": "string"
 								}
@@ -246,48 +258,48 @@
 							},
 							{
 								"source": {
-									"name": "PackageId",
+									"name": "CustomState",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "PackageId",
+									"name": "CustomState",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "Workflow",
+									"name": "TaskType",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "Workflow",
+									"name": "TaskType",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "HostName",
+									"name": "AssignedTo",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "HostName",
+									"name": "AssignedTo",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "ServiceHostLocation",
+									"name": "LastBlockedReason",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "ServiceHostLocation",
+									"name": "LastBlockedReason",
 									"type": "String",
 									"physicalType": "string"
 								}
@@ -306,72 +318,108 @@
 							},
 							{
 								"source": {
-									"name": "TotalTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "StartWaitingDate",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
 								},
 								"sink": {
-									"name": "TotalTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "StartWaitingDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
 								}
 							},
 							{
 								"source": {
-									"name": "FinishedTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "FinishWaitingDate",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
 								},
 								"sink": {
-									"name": "FinishedTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
+									"name": "FinishWaitingDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
 								}
 							},
 							{
 								"source": {
-									"name": "BlockedTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
-								},
-								"sink": {
-									"name": "BlockedTaskCount",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "ParametersJson",
+									"name": "TaskGroupPath",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "ParametersJson",
+									"name": "TaskGroupPath",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "SettingsJson",
+									"name": "Notes",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "SettingsJson",
+									"name": "Notes",
 									"type": "String",
 									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
-									"name": "MdmId",
+									"name": "OwningTeamId",
 									"type": "String",
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "MdmId",
+									"name": "OwningTeamId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "ProgressInfo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ProgressInfo",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "LogUri",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "LogUri",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "ProgressReportLink",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ProgressReportLink",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "IngestionTime",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								},
+								"sink": {
+									"name": "IngestionTime",
 									"type": "String",
 									"physicalType": "string"
 								}
@@ -386,13 +434,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Sql_Job",
+						"referenceName": "Sql_Task",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_Temp_Job",
+						"referenceName": "Kusto_Temp_Task",
 						"type": "DatasetReference"
 					}
 				]
