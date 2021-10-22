@@ -306,18 +306,6 @@
 							},
 							{
 								"source": {
-									"name": "Notes",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "Notes",
-									"type": "String",
-									"physicalType": "string"
-								}
-							},
-							{
-								"source": {
 									"name": "TotalTaskCount",
 									"type": "Int32",
 									"physicalType": "int"
