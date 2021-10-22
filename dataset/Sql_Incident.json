@@ -1,0 +1,171 @@
+{
+	"name": "Sql_Incident",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzcisBeta",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaskID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaskName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OD",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StateName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "RootCauseTitle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RootCauseBugId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IsExternal",
+				"type": "bit"
+			},
+			{
+				"name": "DisplayName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExternalSystemType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "ResolvedDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "IsFiledInFlighting",
+				"type": "bit"
+			},
+			{
+				"name": "AssociatedPackageIds",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SourceCreatedBy",
+				"type": "varchar"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ResolveDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ResolvedBy",
+				"type": "varchar"
+			},
+			{
+				"name": "MitigateDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DurationInMinutes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeToResolveInMinutes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeToMitigateInMinutes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CorrelationId",
+				"type": "varchar"
+			},
+			{
+				"name": "OwningTenantName",
+				"type": "varchar"
+			},
+			{
+				"name": "OwningTeamName",
+				"type": "varchar"
+			},
+			{
+				"name": "Severity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IsNoise",
+				"type": "bit"
+			},
+			{
+				"name": "Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HitCount",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "HowFixed",
+				"type": "varchar"
+			},
+			{
+				"name": "IncidentSubType",
+				"type": "varchar"
+			},
+			{
+				"name": "Keywords",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExternalLink",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Incident"
+		}
+	}
+}
