@@ -111,6 +111,284 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "JobId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "JobId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "ParentId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ParentId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "RootId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "RootId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "DisplayName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "DisplayName",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "Cloud",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Cloud",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "Tenant",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Tenant",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "ServiceHostCapability",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ServiceHostCapability",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "StartDate",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "FinishDate",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								},
+								"sink": {
+									"name": "FinishDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "StateName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "StateName",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "PackageId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "PackageId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "Workflow",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Workflow",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "HostName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "HostName",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "ServiceHostLocation",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ServiceHostLocation",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "Timestamp",
+									"type": "DateTimeOffset",
+									"physicalType": "datetimeoffset"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Notes",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Notes",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "TotalTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "FinishedTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "FinishedTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "BlockedTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "BlockedTaskCount",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "ParametersJson",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ParametersJson",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "SettingsJson",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SettingsJson",
+									"type": "String",
+									"physicalType": "string"
+								}
+							},
+							{
+								"source": {
+									"name": "MdmId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "MdmId",
+									"type": "String",
+									"physicalType": "string"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
