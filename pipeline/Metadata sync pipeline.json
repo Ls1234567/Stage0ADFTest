@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Create table Temp_CIS_Metadata_Job",
+				"name": "Assure table Temp_CIS_Metadata_Job clean",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".create-merge table Temp_CIS_Metadata_Job (JobId:string, ParentId:string, RootId:string, DisplayName:string, Cloud:string, Tenant:string, ServiceHostCapability:string, CreatedDate:datetime, StartDate:datetime, FinishDate:datetime, StateName:string, PackageId:string, Workflow:string, HostName:string, ServiceHostLocation:string, Timestamp:datetime, Notes:string, IsBlockingPathCandidate:string, IsBlockingPathPresent:string, ComponentOwnerId:string, OwningTeamId:string, Client:string, TotalTaskCount:int, FinishedTaskCount:int, BlockedTaskCount:int, ParametersJson:string, SettingsJson:string, MdmId:string)",
+					"command": ".clear table Temp_CIS_Metadata_Job data",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -26,7 +26,14 @@
 			{
 				"name": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy Job from Sql to Kusto",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -45,7 +52,7 @@
 				}
 			},
 			{
-				"name": "Delete Temp_CIS_Metadata_Job",
+				"name": "Clear table Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
@@ -64,7 +71,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".drop table Temp_CIS_Metadata_Job ifexists",
+					"command": ".clear table Temp_CIS_Metadata_Job data",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -75,7 +82,14 @@
 			{
 				"name": "Copy Job from Sql to Kusto",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Assure table Temp_CIS_Metadata_Job clean",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
