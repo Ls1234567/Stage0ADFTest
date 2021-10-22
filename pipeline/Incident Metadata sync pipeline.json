@@ -52,34 +52,6 @@
 				}
 			},
 			{
-				"name": "Clear table Temp_CIS_Metadata_Incident",
-				"type": "AzureDataExplorerCommand",
-				"dependsOn": [
-					{
-						"activity": "Swap CIS_Metadata_Incident Temp_CIS_Metadata_Incident",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"command": ".clear table Temp_CIS_Metadata_Incident data",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "Copy Incident from Sql to Kusto",
 				"type": "Copy",
 				"dependsOn": [
@@ -324,6 +296,34 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Clear table Temp_CIS_Metadata_Incident",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Swap CIS_Metadata_Incident Temp_CIS_Metadata_Incident",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".clear table Temp_CIS_Metadata_Incident data",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
