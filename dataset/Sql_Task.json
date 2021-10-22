@@ -1,0 +1,128 @@
+{
+	"name": "Sql_Task",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzcisBeta",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "TaskId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaskName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExternalId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExternalSystemType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Component",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "StartDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "FinishDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "StateName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomState",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaskType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AssignedTo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastBlockedReason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "StartWaitingDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "FinishWaitingDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "DisplayName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TaskGroupPath",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Notes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OwningTeamId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProgressInfo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LogUri",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProgressReportLink",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IngestionTime",
+				"type": "datetimeoffset",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Task"
+		}
+	}
+}
