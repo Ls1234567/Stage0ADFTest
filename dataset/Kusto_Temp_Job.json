@@ -1,5 +1,5 @@
 {
-	"name": "Kusto_Job",
+	"name": "Kusto_Temp_Job",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "M365OpsCenterInt",
@@ -122,7 +122,7 @@
 			}
 		],
 		"typeProperties": {
-			"table": "CIS_Metadata_Job"
+			"table": "Temp_CIS_Metadata_Job"
 		}
 	}
 }
