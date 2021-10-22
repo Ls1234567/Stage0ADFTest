@@ -1,0 +1,203 @@
+{
+	"name": "Sql_Job",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzcisBeta",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "JobId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParentId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DisplayName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cloud",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tenant",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ServiceHostCapability",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "StartDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "FinishDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "StateName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomState",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PackageId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RuntimePackageId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Workflow",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HostName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ServiceHostLocation",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "ParametersJson",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SettingsJson",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RootId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MdmId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClusterName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClusterType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DatacenterName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FinishedTaskCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TotalTaskCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BlockedTaskCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CisSystem_Severity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SliceIncrementalId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CisCustom_PlannedFinishDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "CisCustom_PlannedStartDate",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "JobsToFlight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PackageToFlight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TasksToFlight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WorkflowOfJobsToFlight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Notes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Mainstream",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CloudType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DCType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TechType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EngineeringGroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IngestionTime",
+				"type": "datetimeoffset",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Job"
+		}
+	}
+}

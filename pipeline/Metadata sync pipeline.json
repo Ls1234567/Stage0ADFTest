@@ -1,0 +1,78 @@
+{
+	"name": "Metadata sync pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Create table Temp_CIS_Metadata_Job",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".create-merge table Temp_CIS_Metadata_Job (JobId:string, ParentId:string, RootId:string, DisplayName:string, Cloud:string, Tenant:string, ServiceHostCapability:string, CreatedDate:datetime, StartDate:datetime, FinishDate:datetime, StateName:string, PackageId:string, Workflow:string, HostName:string, ServiceHostLocation:string, Timestamp:datetime, Notes:string, IsBlockingPathCandidate:string, IsBlockingPathPresent:string, ComponentOwnerId:string, OwningTeamId:string, Client:string, TotalTaskCount:int, FinishedTaskCount:int, BlockedTaskCount:int, ParametersJson:string, SettingsJson:string, MdmId:string)",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".rename tables CIS_Metadata_Job=Temp_CIS_Metadata_Job ifexists, Temp_CIS_Metadata_Job=CIS_Metadata_Job",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Delete Temp_CIS_Metadata_Job",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".drop table Temp_CIS_Metadata_Job ifexists",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}

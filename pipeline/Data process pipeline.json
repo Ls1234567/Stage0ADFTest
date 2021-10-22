@@ -1,5 +1,5 @@
 {
-	"name": "Data sync pipeline",
+	"name": "Data process pipeline",
 	"properties": {
 		"activities": [
 			{
