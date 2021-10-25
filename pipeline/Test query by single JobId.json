@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Test query by single JobId",
 	"properties": {
 		"activities": [
 			{
@@ -29,8 +29,8 @@
 				}
 			},
 			{
-				"name": "Query all tasks",
-				"type": "Lookup",
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "Query all job ids",
@@ -39,29 +39,42 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "@select * from dbo.Task where JobId in (activity('Query all job ids').output.value.first.JobId)",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"items": {
+						"value": "@activity('Query all job ids').output.value",
+						"type": "Expression"
 					},
-					"dataset": {
-						"referenceName": "Sql_Job",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
+					"activities": [
+						{
+							"name": "Get task by JobId",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from dbo.Task where JobId = '@{item().JobId}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "Sql_Task",
+									"type": "DatasetReference"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
