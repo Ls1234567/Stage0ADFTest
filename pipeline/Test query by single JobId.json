@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Enumerate JobIds",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -47,37 +47,63 @@
 					},
 					"activities": [
 						{
-							"name": "Get task by JobId",
-							"type": "Lookup",
+							"name": "Append JobId",
+							"type": "AppendVariable",
 							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "AzureSqlSource",
-									"sqlReaderQuery": {
-										"value": "select * from dbo.Task where JobId = '@{item().JobId}'",
-										"type": "Expression"
-									},
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "Sql_Task",
-									"type": "DatasetReference"
+								"variableName": "JobIds",
+								"value": {
+									"value": "@concat('''', item().JobId, '''')",
+									"type": "Expression"
 								}
 							}
 						}
 					]
 				}
+			},
+			{
+				"name": "Query all tasks",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Enumerate JobIds",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select * from dbo.Task where JobId in (@{join(variables('JobIds'), ',')})",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Sql_Task",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
 			}
 		],
+		"variables": {
+			"JobIds": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
