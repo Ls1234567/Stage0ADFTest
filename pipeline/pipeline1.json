@@ -15,25 +15,66 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "http://login.microsoftonline.com/microsoft.com",
-					"method": "GET",
+					"url": "https://login.microsoftonline.com/microsoft.onmicrosoft.com/oauth2/token",
+					"method": "POST",
 					"headers": {
 						"Content-type": "application/x-www-form-urlencoded"
 					},
-					"authentication": {
-						"type": "ServicePrincipal",
-						"userTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-						"username": "ed857452-e380-4621-a248-a2764e8cb70c",
-						"resource": "http://microsoft.com/beta-cps",
-						"password": {
-							"type": "AzureKeyVaultSecret",
-							"store": {
-								"referenceName": "FleetAGCKeyVault",
-								"type": "LinkedServiceReference"
-							},
-							"secretName": "ClientSecret"
+					"body": "grant_type=client_credentials&client_id=ed857452-e380-4621-a248-a2764e8cb70c&resource=http://microsoft.com/beta-cps&client_secret=zrRTt7-8sO8T--2cOfg-sloIqZz7G5Ex.K"
+				}
+			},
+			{
+				"name": "Get Jobs from OData",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetBearerToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://beta-cps.trafficmanager.net/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=Timestamp%20gt%202021-10-22T00:00:00Z%20and%20OwningTeamId%20eq%20'M365FleetAGCEngineering'",
+					"method": "GET",
+					"headers": {
+						"Authorization": {
+							"value": "Bearer @{activity('GetBearerToken').output.access_token}",
+							"type": "Expression"
 						}
 					}
+				}
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],
