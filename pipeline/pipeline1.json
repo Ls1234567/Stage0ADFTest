@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Job flow OData to Kusto",
+				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
