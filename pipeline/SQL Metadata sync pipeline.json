@@ -1,5 +1,5 @@
 {
-	"name": "Metadata sync pipeline",
+	"name": "SQL Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{

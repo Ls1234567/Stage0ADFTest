@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "OData Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{
