@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "GetBearerToken",
+				"name": "Get Bearer Token",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "GetBearerToken",
+						"activity": "Get Bearer Token",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,13 +43,34 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://beta-cps.trafficmanager.net/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=Timestamp%20gt%202021-10-20T00:00:00Z%20and%20OwningTeamId%20eq%20'M365FleetAGCEngineering'",
+					"url": "https://beta-cps.trafficmanager.net/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=Timestamp%20gt%202021-10-15T00:00:00Z%20and%20OwningTeamId%20eq%20'M365FleetAGCEngineering'",
 					"method": "GET",
 					"headers": {
 						"Authorization": {
 							"value": "Bearer @{activity('GetBearerToken').output.access_token}",
 							"type": "Expression"
 						}
+					}
+				}
+			},
+			{
+				"name": "Get ClientSecret",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://fleetagcorchestration.vault.azure.net/secrets/ClientSecret/4d525ad30a5f4ecb962fcb9142d116dd?api-version=7.0",
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
 					}
 				}
 			}
