@@ -336,6 +336,267 @@
 					"referenceName": "M365OpsCenterInt",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Assure table Temp_CIS_Metadata_Task clean",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".clear table Temp_CIS_Metadata_Task data",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Copy Task from OData to Kusto",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".rename tables CIS_Metadata_Task=Temp_CIS_Metadata_Task ifexists, Temp_CIS_Metadata_Task=CIS_Metadata_Task",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Clear table Temp_CIS_Metadata_Task",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".clear table Temp_CIS_Metadata_Task data",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Copy Task from OData to Kusto",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Assure table Temp_CIS_Metadata_Task clean",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "AzureDataExplorerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['TaskId']"
+								},
+								"sink": {
+									"name": "TaskId"
+								}
+							},
+							{
+								"source": {
+									"path": "['JobId']"
+								},
+								"sink": {
+									"name": "JobId"
+								}
+							},
+							{
+								"source": {
+									"path": "['TaskName']"
+								},
+								"sink": {
+									"name": "TaskName"
+								}
+							},
+							{
+								"source": {
+									"path": "['DisplayName']"
+								},
+								"sink": {
+									"name": "DisplayName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ExternalId']"
+								},
+								"sink": {
+									"name": "ExternalId"
+								}
+							},
+							{
+								"source": {
+									"path": "['ExternalSystemType']"
+								},
+								"sink": {
+									"name": "ExternalSystemType"
+								}
+							},
+							{
+								"source": {
+									"path": "['Component']"
+								},
+								"sink": {
+									"name": "Component"
+								}
+							},
+							{
+								"source": {
+									"path": "['OrderId']"
+								},
+								"sink": {
+									"name": "OrderId"
+								}
+							},
+							{
+								"source": {
+									"path": "['CreatedDate']"
+								},
+								"sink": {
+									"name": "CreatedDate"
+								}
+							},
+							{
+								"source": {
+									"path": "['StartDate']"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "['FinishDate']"
+								},
+								"sink": {
+									"name": "FinishDate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "['StateName']"
+								},
+								"sink": {
+									"name": "StateName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['CustomState']"
+								},
+								"sink": {
+									"name": "CustomState"
+								}
+							},
+							{
+								"source": {
+									"path": "['TaskType']"
+								},
+								"sink": {
+									"name": "TaskType"
+								}
+							},
+							{
+								"source": {
+									"path": "['AssignedTo']"
+								},
+								"sink": {
+									"name": "AssignedTo"
+								}
+							},
+							{
+								"source": {
+									"path": "['Timestamp']"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "DateTime"
+								}
+							}
+						],
+						"collectionReference": "$['value']",
+						"mapComplexValuesToString": false
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ODataTask",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Kusto_Temp_Task",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []

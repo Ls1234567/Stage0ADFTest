@@ -22,7 +22,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".append Temp_SelectedJob with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, Notes, IsBlockingPathCandidate, IsBlockingPathPresent, ComponentOwnerId, OwningTeamId,\n        Client, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
+					"command": ".append Temp_SelectedJob with(tags='[\"test\"]') <|\n    CIS_Metadata_Job\n    | where Workflow in ('BootstrapDCSeedingServerWorkflow', 'CreateVMandJoinDomainWorkflow', 'SetupCASeedServerWorkflow') and ParentId != '' and ParentId == RootId\n    | join kind=inner WorkloadMapping\n        on DisplayName\n    | project JobId, ParentId, RootId, DisplayName, Cloud, Tenant, ServiceHostCapability,\n        CreatedDate, StartDate, FinishDate, StateName, PackageId, Workflow, HostName, ServiceHostLocation,\n        Timestamp, ParametersJson, SettingsJson, MdmId, TotalTaskCount, FinishedTaskCount, BlockedTaskCount,\n        FinishTaskPercentage=1.0 * FinishedTaskCount/TotalTaskCount, FinishTaskProgress=strcat(FinishedTaskCount,\"/\",TotalTaskCount), \n        WorkflowName=Workflow, WorkloadDisplay, WorkloadName",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
@@ -43,7 +43,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".create-merge table Temp_SelectedJob (JobId:string, ParentId:string, RootId:string, DisplayName:string, Cloud:string, Tenant:string, ServiceHostCapability:string, CreatedDate:datetime, StartDate:datetime, FinishDate:datetime, StateName:string, PackageId:string, Workflow:string, HostName:string, ServiceHostLocation:string, Timestamp:datetime, Notes:string, IsBlockingPathCandidate:string, IsBlockingPathPresent:string, ComponentOwnerId:string, OwningTeamId:string, Client:string, ParametersJson:string, SettingsJson:string, MdmId:string, TotalTaskCount:int, FinishedTaskCount:int, BlockedTaskCount:int, FinishTaskPercentage:real, FinishTaskProgress:string, WorkflowName:string, WorkloadDisplay:string, WorkloadName:string)  \n",
+					"command": ".create-merge table Temp_SelectedJob (JobId: string, ParentId: string, RootId: string, DisplayName: string, Cloud: string, Tenant: string, ServiceHostCapability: string, CreatedDate: datetime, StartDate: datetime, FinishDate: datetime, StateName: string, PackageId: string, Workflow: string, HostName: string, ServiceHostLocation: string, Timestamp: datetime, ParametersJson: string, SettingsJson: string, MdmId: string, TotalTaskCount: int, FinishedTaskCount: int, BlockedTaskCount: int, FinishTaskPercentage: real, FinishTaskProgress: string, WorkflowName: string, WorkloadDisplay: string, WorkloadName: string)  ",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
