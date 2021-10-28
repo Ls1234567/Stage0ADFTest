@@ -84,7 +84,7 @@
 							},
 							{
 								"source": {
-									"path": "['JobType']"
+									"path": "['Tenant']"
 								},
 								"sink": {
 									"name": "JobType",
@@ -237,7 +237,7 @@
 							}
 						],
 						"collectionReference": "$['value']",
-						"mapComplexValuesToString": false
+						"mapComplexValuesToString": true
 					}
 				},
 				"inputs": [
