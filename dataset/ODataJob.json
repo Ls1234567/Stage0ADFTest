@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/cis.odata.svc/Public/M365AGCBuildout/Job?$filter=OwningTeamId%20eq%20'M365FleetAGCEngineering'"
+			"relativeUrl": "/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=OwningTeamId%20eq%20'M365FleetAGCEngineering'"
 		},
 		"schema": []
 	}
