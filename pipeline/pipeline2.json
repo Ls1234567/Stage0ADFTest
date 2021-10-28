@@ -165,10 +165,10 @@
 							},
 							{
 								"source": {
-									"path": "['ServiceHostCapability']"
+									"path": "['ServiceHostLocation']"
 								},
 								"sink": {
-									"name": "ServiceHostCapability",
+									"name": "ServiceHostLocation",
 									"type": "String"
 								}
 							},
