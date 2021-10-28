@@ -39,7 +39,7 @@
 							},
 							{
 								"source": {
-									"path": "['ParentId']"
+									"path": "$['value'][0]['ParentId']"
 								},
 								"sink": {
 									"name": "ParentId",
@@ -48,24 +48,15 @@
 							},
 							{
 								"source": {
-									"path": "['RootId']"
+									"path": "$['value'][0]['RootId']"
 								},
 								"sink": {
 									"name": "RootId",
 									"type": "String"
 								}
-							},
-							{
-								"source": {
-									"path": "['DisplayName']"
-								},
-								"sink": {
-									"name": "DisplayName",
-									"type": "String"
-								}
 							}
 						],
-						"collectionReference": "$['value']",
+						"collectionReference": "",
 						"mapComplexValuesToString": false
 					}
 				},
