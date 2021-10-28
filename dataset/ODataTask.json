@@ -1,0 +1,15 @@
+{
+	"name": "ODataTask",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ODataAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/cis.odata.svc/Public/M365AGCBuildout/Tasks?$filter=AssignedTo%20eq%20'M365 Fleet AGC Engineering'"
+		},
+		"schema": []
+	}
+}

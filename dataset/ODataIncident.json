@@ -1,0 +1,15 @@
+{
+	"name": "ODataIncident",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ODataAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/cis.odata.svc/Public/M365AGCBuildout/Incidents?$filter=Timestamp%20gt%202021-09-12T00:00:00Z%20and%20ExternalSystemType%20eq%20'Icm'"
+		},
+		"schema": []
+	}
+}
