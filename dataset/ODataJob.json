@@ -1,5 +1,5 @@
 {
-	"name": "OData",
+	"name": "ODataJob",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ODataAPI",
@@ -7,6 +7,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "?Job$filter=OwningTeamId eq 'M365FleetAGCEngineering'"
+		},
 		"schema": []
 	}
 }
