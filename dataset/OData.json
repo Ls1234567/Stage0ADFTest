@@ -1,0 +1,12 @@
+{
+	"name": "OData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ODataAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
