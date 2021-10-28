@@ -5,7 +5,14 @@
 			{
 				"name": "Get Bearer Token",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Get ClientSecret",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -20,7 +27,10 @@
 					"headers": {
 						"Content-type": "application/x-www-form-urlencoded"
 					},
-					"body": "grant_type=client_credentials&client_id=ed857452-e380-4621-a248-a2764e8cb70c&resource=http://microsoft.com/beta-cps&client_secret=zrRTt7-8sO8T--2cOfg-sloIqZz7G5Ex.K"
+					"body": {
+						"value": "grant_type=client_credentials&client_id=ed857452-e380-4621-a248-a2764e8cb70c&resource=http://microsoft.com/beta-cps&client_secret=@{activity('Get ClientSecret').output.value}",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -47,7 +57,7 @@
 					"method": "GET",
 					"headers": {
 						"Authorization": {
-							"value": "Bearer @{activity('GetBearerToken').output.access_token}",
+							"value": "Bearer @{activity('Get Bearer Token').output.access_token}",
 							"type": "Expression"
 						}
 					}
