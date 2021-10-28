@@ -24,7 +24,50 @@
 					"sink": {
 						"type": "AzureDataExplorerSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['JobId']"
+								},
+								"sink": {
+									"name": "JobId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ParentId']"
+								},
+								"sink": {
+									"name": "ParentId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['RootId']"
+								},
+								"sink": {
+									"name": "RootId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['DisplayName']"
+								},
+								"sink": {
+									"name": "DisplayName",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['value']",
+						"mapComplexValuesToString": true
+					}
 				},
 				"inputs": [
 					{
