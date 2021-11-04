@@ -186,6 +186,16 @@
 							},
 							{
 								"source": {
+									"name": "JobType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "JobType"
+								}
+							},
+							{
+								"source": {
 									"name": "ServiceHostCapability",
 									"type": "String",
 									"physicalType": "nvarchar"
