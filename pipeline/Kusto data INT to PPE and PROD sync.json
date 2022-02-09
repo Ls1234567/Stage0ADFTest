@@ -1,0 +1,6 @@
+{
+	"name": "Kusto data INT to PPE and PROD sync",
+	"properties": {
+		"annotations": []
+	}
+}
