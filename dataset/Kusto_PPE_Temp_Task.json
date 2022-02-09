@@ -1,0 +1,120 @@
+{
+	"name": "Kusto_PPE_Temp_Task",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "M365OpsCenterppe",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [
+			{
+				"name": "TaskId",
+				"type": "string"
+			},
+			{
+				"name": "JobId",
+				"type": "string"
+			},
+			{
+				"name": "TaskName",
+				"type": "string"
+			},
+			{
+				"name": "DisplayName",
+				"type": "string"
+			},
+			{
+				"name": "ExternalId",
+				"type": "string"
+			},
+			{
+				"name": "ExternalSystemType",
+				"type": "string"
+			},
+			{
+				"name": "Component",
+				"type": "string"
+			},
+			{
+				"name": "OrderId",
+				"type": "string"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime"
+			},
+			{
+				"name": "StartDate",
+				"type": "datetime"
+			},
+			{
+				"name": "FinishDate",
+				"type": "datetime"
+			},
+			{
+				"name": "StateName",
+				"type": "string"
+			},
+			{
+				"name": "CustomState",
+				"type": "string"
+			},
+			{
+				"name": "TaskType",
+				"type": "string"
+			},
+			{
+				"name": "AssignedTo",
+				"type": "string"
+			},
+			{
+				"name": "LastBlockedReason",
+				"type": "string"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetime"
+			},
+			{
+				"name": "StartWaitingDate",
+				"type": "datetime"
+			},
+			{
+				"name": "FinishWaitingDate",
+				"type": "datetime"
+			},
+			{
+				"name": "TaskGroupPath",
+				"type": "string"
+			},
+			{
+				"name": "Notes",
+				"type": "string"
+			},
+			{
+				"name": "OwningTeamId",
+				"type": "string"
+			},
+			{
+				"name": "ProgressInfo",
+				"type": "string"
+			},
+			{
+				"name": "LogUri",
+				"type": "string"
+			},
+			{
+				"name": "ProgressReportLink",
+				"type": "string"
+			},
+			{
+				"name": "IngestionTime",
+				"type": "string"
+			}
+		],
+		"typeProperties": {
+			"table": "Temp_CIS_Metadata_Task"
+		}
+	}
+}
