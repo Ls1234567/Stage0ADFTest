@@ -100,10 +100,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from dbo.Job where JobType='M365AGCBuildout'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "AzureDataExplorerSource",
+						"query": "CIS_Metadata_Job",
+						"queryTimeout": "00:10:00"
 					},
 					"sink": {
 						"type": "AzureDataExplorerSink"
@@ -116,7 +115,7 @@
 								"source": {
 									"name": "JobId",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "JobId",
@@ -128,7 +127,7 @@
 								"source": {
 									"name": "ParentId",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "ParentId",
@@ -140,7 +139,7 @@
 								"source": {
 									"name": "RootId",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "RootId",
@@ -152,7 +151,7 @@
 								"source": {
 									"name": "DisplayName",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "DisplayName",
@@ -164,7 +163,7 @@
 								"source": {
 									"name": "Cloud",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "Cloud",
@@ -176,7 +175,7 @@
 								"source": {
 									"name": "Tenant",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "Tenant",
@@ -188,17 +187,19 @@
 								"source": {
 									"name": "JobType",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
-									"name": "JobType"
+									"name": "JobType",
+									"type": "String",
+									"physicalType": "string"
 								}
 							},
 							{
 								"source": {
 									"name": "ServiceHostCapability",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "ServiceHostCapability",
@@ -209,8 +210,8 @@
 							{
 								"source": {
 									"name": "CreatedDate",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
+									"type": "DateTime",
+									"physicalType": "datetime"
 								},
 								"sink": {
 									"name": "CreatedDate",
@@ -221,8 +222,8 @@
 							{
 								"source": {
 									"name": "StartDate",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
+									"type": "DateTime",
+									"physicalType": "datetime"
 								},
 								"sink": {
 									"name": "StartDate",
@@ -233,8 +234,8 @@
 							{
 								"source": {
 									"name": "FinishDate",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
+									"type": "DateTime",
+									"physicalType": "datetime"
 								},
 								"sink": {
 									"name": "FinishDate",
@@ -246,7 +247,7 @@
 								"source": {
 									"name": "StateName",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "StateName",
@@ -258,7 +259,7 @@
 								"source": {
 									"name": "PackageId",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "PackageId",
@@ -270,7 +271,7 @@
 								"source": {
 									"name": "Workflow",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "Workflow",
@@ -282,7 +283,7 @@
 								"source": {
 									"name": "HostName",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "HostName",
@@ -294,7 +295,7 @@
 								"source": {
 									"name": "ServiceHostLocation",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "ServiceHostLocation",
@@ -305,8 +306,8 @@
 							{
 								"source": {
 									"name": "Timestamp",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
+									"type": "DateTime",
+									"physicalType": "datetime"
 								},
 								"sink": {
 									"name": "Timestamp",
@@ -354,7 +355,7 @@
 								"source": {
 									"name": "ParametersJson",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "ParametersJson",
@@ -366,7 +367,7 @@
 								"source": {
 									"name": "SettingsJson",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "SettingsJson",
@@ -378,7 +379,7 @@
 								"source": {
 									"name": "MdmId",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "string"
 								},
 								"sink": {
 									"name": "MdmId",
@@ -396,13 +397,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Sql_Job",
+						"referenceName": "Kusto_INT_Job",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_INT_Temp_Job",
+						"referenceName": "Kusto_PPE_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
