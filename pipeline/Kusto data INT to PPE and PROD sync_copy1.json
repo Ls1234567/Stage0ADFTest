@@ -1,5 +1,5 @@
 {
-	"name": "Kusto data INT to PPE sync",
+	"name": "Kusto data INT to PPE and PROD sync_copy1",
 	"properties": {
 		"activities": [
 			{
