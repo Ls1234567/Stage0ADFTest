@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Assure table Temp_CIS_Metadata_Job clean",
+				"name": "Assure PPE table Temp_CIS_Metadata_Job clean",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -84,7 +84,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Assure table Temp_CIS_Metadata_Job clean",
+						"activity": "Assure PPE table Temp_CIS_Metadata_Job clean",
 						"dependencyConditions": [
 							"Succeeded"
 						]
