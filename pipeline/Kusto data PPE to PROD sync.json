@@ -1,9 +1,9 @@
 {
-	"name": "Kusto data INT to PPE and PROD sync_copy1",
+	"name": "Kusto data PPE to PROD sync",
 	"properties": {
 		"activities": [
 			{
-				"name": "Assure PPE table Temp_CIS_Metadata_Job clean",
+				"name": "Assure PROD table Temp_CIS_Metadata_Job clean",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -19,7 +19,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -28,7 +28,7 @@
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Copy Job from Kusto Int to PPE",
+						"activity": "Copy Job from Kusto PPE to PROD",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -80,11 +80,11 @@
 				}
 			},
 			{
-				"name": "Copy Job from Kusto Int to PPE",
+				"name": "Copy Job from Kusto PPE to PROD",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Assure PPE table Temp_CIS_Metadata_Job clean",
+						"activity": "Assure PROD table Temp_CIS_Metadata_Job clean",
 						"dependencyConditions": [
 							"Succeeded"
 						]
