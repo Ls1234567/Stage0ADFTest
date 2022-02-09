@@ -1,0 +1,108 @@
+{
+	"name": "Kusto_INT_Job",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "M365OpsCenterInt",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [
+			{
+				"name": "JobId",
+				"type": "string"
+			},
+			{
+				"name": "ParentId",
+				"type": "string"
+			},
+			{
+				"name": "RootId",
+				"type": "string"
+			},
+			{
+				"name": "DisplayName",
+				"type": "string"
+			},
+			{
+				"name": "Cloud",
+				"type": "string"
+			},
+			{
+				"name": "Tenant",
+				"type": "string"
+			},
+			{
+				"name": "JobType",
+				"type": "string"
+			},
+			{
+				"name": "ServiceHostCapability",
+				"type": "string"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime"
+			},
+			{
+				"name": "StartDate",
+				"type": "datetime"
+			},
+			{
+				"name": "FinishDate",
+				"type": "datetime"
+			},
+			{
+				"name": "StateName",
+				"type": "string"
+			},
+			{
+				"name": "PackageId",
+				"type": "string"
+			},
+			{
+				"name": "Workflow",
+				"type": "string"
+			},
+			{
+				"name": "HostName",
+				"type": "string"
+			},
+			{
+				"name": "ServiceHostLocation",
+				"type": "string"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetime"
+			},
+			{
+				"name": "TotalTaskCount",
+				"type": "int"
+			},
+			{
+				"name": "FinishedTaskCount",
+				"type": "int"
+			},
+			{
+				"name": "BlockedTaskCount",
+				"type": "int"
+			},
+			{
+				"name": "ParametersJson",
+				"type": "string"
+			},
+			{
+				"name": "SettingsJson",
+				"type": "string"
+			},
+			{
+				"name": "MdmId",
+				"type": "string"
+			}
+		],
+		"typeProperties": {
+			"table": "CIS_Metadata_Job"
+		}
+	}
+}
