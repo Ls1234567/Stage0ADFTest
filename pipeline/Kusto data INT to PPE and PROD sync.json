@@ -24,7 +24,7 @@
 				}
 			},
 			{
-				"name": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+				"name": "Swap PPE CIS_Metadata_Job and Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
@@ -47,16 +47,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Clear table Temp_CIS_Metadata_Job",
+				"name": "Clear PPE table Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Swap CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+						"activity": "Swap PPE CIS_Metadata_Job and Temp_CIS_Metadata_Job",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -75,7 +75,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
