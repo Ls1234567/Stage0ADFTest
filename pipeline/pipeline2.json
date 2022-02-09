@@ -174,7 +174,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_Temp_Task",
+						"referenceName": "Kusto_INT_Temp_Task",
 						"type": "DatasetReference"
 					}
 				]

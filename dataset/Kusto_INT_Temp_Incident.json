@@ -1,5 +1,5 @@
 {
-	"name": "Kusto_Temp_Incident",
+	"name": "Kusto_INT_Temp_Incident",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "M365OpsCenterInt",

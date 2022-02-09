@@ -402,7 +402,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_Temp_Job",
+						"referenceName": "Kusto_INT_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
@@ -573,7 +573,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from dbo.Task where JobId in (@{join(variables('JobIds'), ',')})",
+						"sqlReaderQuery": {
+							"value": "select * from dbo.Task where JobId in (@{join(variables('JobIds'), ',')})",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -912,7 +915,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_Temp_Task",
+						"referenceName": "Kusto_INT_Temp_Task",
 						"type": "DatasetReference"
 					}
 				]
@@ -995,7 +998,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from dbo.Incident where JobId in (@{join(variables('JobIds'), ',')})",
+						"sqlReaderQuery": {
+							"value": "select * from dbo.Incident where JobId in (@{join(variables('JobIds'), ',')})",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -1214,7 +1220,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_Temp_Incident",
+						"referenceName": "Kusto_INT_Temp_Incident",
 						"type": "DatasetReference"
 					}
 				]

@@ -1,5 +1,5 @@
 {
-	"name": "Kusto_Temp_Task",
+	"name": "Kusto_INT_Temp_Task",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "M365OpsCenterInt",
