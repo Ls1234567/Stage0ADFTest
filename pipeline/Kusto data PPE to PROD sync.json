@@ -24,7 +24,7 @@
 				}
 			},
 			{
-				"name": "Swap PPE CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+				"name": "Swap PROD CIS_Metadata_Job and Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
@@ -47,16 +47,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Clear PPE table Temp_CIS_Metadata_Job",
+				"name": "Clear PROD table Temp_CIS_Metadata_Job",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Swap PPE CIS_Metadata_Job and Temp_CIS_Metadata_Job",
+						"activity": "Swap PROD CIS_Metadata_Job and Temp_CIS_Metadata_Job",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -75,7 +75,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -397,19 +397,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Kusto_INT_Job",
+						"referenceName": "Kusto_PPE_Job",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Temp_Job",
+						"referenceName": "Kusto_PROD_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Assure PPE table Temp_CIS_Metadata_Task clean",
+				"name": "Assure PROD table Temp_CIS_Metadata_Task clean",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -425,16 +425,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Swap PPE CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+				"name": "Swap PROD CIS_Metadata_Task and Temp_CIS_Metadata_Task",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Copy Task from Kusto Int to PPE",
+						"activity": "Copy Task from Kusto PPE to PROD",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -453,16 +453,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Clear PPE table Temp_CIS_Metadata_Task",
+				"name": "ClearPROD table Temp_CIS_Metadata_Task",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Swap PPE CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+						"activity": "Swap PROD CIS_Metadata_Task and Temp_CIS_Metadata_Task",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -481,16 +481,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Copy Task from Kusto Int to PPE",
+				"name": "Copy Task from Kusto PPE to PROD",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Assure PPE table Temp_CIS_Metadata_Task clean",
+						"activity": "Assure PROD table Temp_CIS_Metadata_Task clean",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -839,19 +839,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Kusto_INT_Task",
+						"referenceName": "Kusto_PPE_Task",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Temp_Task",
+						"referenceName": "Kusto_PROD_Temp_Task",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Assure PPE table Temp_CIS_Metadata_Incident clean",
+				"name": "Assure PROD table Temp_CIS_Metadata_Incident clean",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -867,16 +867,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Swap PPE CIS_Metadata_Incident and Temp_Incident",
+				"name": "Swap PROD CIS_Metadata_Incident and Temp_Incident",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Copy Incident from Kusto Int to PPE",
+						"activity": "Copy Incident from Kusto PPE to PROD",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -895,16 +895,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Clear PPE table Temp_CIS_Metadata_Incident",
+				"name": "Clear PROD table Temp_CIS_Metadata_Incident",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
 					{
-						"activity": "Swap PPE CIS_Metadata_Incident and Temp_Incident",
+						"activity": "Swap PROD CIS_Metadata_Incident and Temp_Incident",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -923,16 +923,16 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			},
 			{
-				"name": "Copy Incident from Kusto Int to PPE",
+				"name": "Copy Incident from Kusto PPE to PROD",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Assure PPE table Temp_CIS_Metadata_Incident clean",
+						"activity": "Assure PROD table Temp_CIS_Metadata_Incident clean",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1161,13 +1161,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Kusto_INT_Incident",
+						"referenceName": "Kusto_PPE_Incident",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Temp_Incident",
+						"referenceName": "Kusto_PROD_Temp_Incident",
 						"type": "DatasetReference"
 					}
 				]
