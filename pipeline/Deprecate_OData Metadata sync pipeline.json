@@ -1,5 +1,5 @@
 {
-	"name": "OData Metadata sync pipeline",
+	"name": "Deprecate_OData Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{
