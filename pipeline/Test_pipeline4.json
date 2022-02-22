@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365BuildoutPlanner'",
+						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365AGCBuildout' or JobType='M365BuildoutPlanner'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
