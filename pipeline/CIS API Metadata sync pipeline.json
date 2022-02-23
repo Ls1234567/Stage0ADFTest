@@ -1,5 +1,5 @@
 {
-	"name": "Deprecate_OData Metadata sync pipeline",
+	"name": "CIS API Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{

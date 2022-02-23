@@ -1,0 +1,15 @@
+{
+	"name": "CisBetaJob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CisBetaAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/cis.client.svc/Public/M365AGCBuildout/Jobs?$filter=OwningTeamId%20eq%20'M365FleetAGCEngineering'"
+		},
+		"schema": []
+	}
+}
