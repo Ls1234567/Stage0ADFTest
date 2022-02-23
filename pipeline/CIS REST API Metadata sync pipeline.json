@@ -1,5 +1,5 @@
 {
-	"name": "CIS Odata API Metadata sync pipeline",
+	"name": "CIS REST API Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{
