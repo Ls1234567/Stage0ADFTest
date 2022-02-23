@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Azure Data Explorer Command1",
+				"name": "Kusto test",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [],
 				"policy": {
@@ -15,11 +15,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".create-or-alter function with (folder = \"Views\", docstring = \"View to get CIS Task Details by job for API Service.\", skipvalidation = \"true\") \n    View_APIServiceGetCisTaskDetails(p_JobId: string) {\n        /////////////////////////////////////////////////////\n        //\n        // View_APIServiceGetCisTaskDetails(p_JobId='2517682757198309999_a716ea70-42d8-44d6-89bb-7bf732d69a10')\n        /////////////////////////////////////////////////////\n        //\n        let subJobIds = CIS_Metadata_Task\n        | where JobId in (p_JobId) and ProgressReportLink != ''\n        | project JobId = tostring(split(ProgressReportLink, \"/\")[-1]), SelfOrderId = OrderId;\n        let leafJobIds = CIS_Metadata_Task\n        | join kind = inner subJobIds on JobId\n        | where ProgressReportLink != ''\n        | project JobId = tostring(split(ProgressReportLink, \"/\")[-1]), ParentOrderId = SelfOrderId, SelfOrderId = OrderId;\n        ((CIS_Metadata_Task\n        | where JobId in (p_JobId)\n        | project TaskId, TaskName, DisplayName, Component, Level1Order = toint(OrderId) - 1, Level2Order = -1, Level3Order = -1, Level = 1, OrderId = toint(OrderId), CreatedDate, StartDate, FinishDate, StateName)\n        | union(CIS_Metadata_Task\n        | join kind = inner subJobIds on JobId\n        | project TaskId, TaskName, DisplayName, Component, Level1Order = toint(SelfOrderId) - 1, Level2Order = toint(OrderId) - 1, Level3Order = -1, Level = 2, OrderId = toint(OrderId), CreatedDate, StartDate, FinishDate, StateName)\n        | union(CIS_Metadata_Task\n        | join kind = inner leafJobIds on JobId\n        | project TaskId, TaskName, DisplayName, Component, Level1Order = toint(ParentOrderId) - 1, Level2Order = toint(SelfOrderId) - 1, Level3Order = toint(OrderId) - 1, Level = 3, OrderId = toint(OrderId), CreatedDate, StartDate, FinishDate, StateName))\n        | join kind = leftouter CIS_Metadata_Incident on TaskId\n        | project TaskId, TaskName, DisplayName, Component, Level1Order, Level2Order, Level3Order, Level, OrderId, CreatedDate, StartDate, FinishDate, StateName, IcmLink = ExternalLink\n        | order by Level1Order asc, Level2Order asc, Level3Order asc\n    }",
+					"command": ".show functions",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			}
