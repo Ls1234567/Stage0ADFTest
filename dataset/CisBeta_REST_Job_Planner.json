@@ -1,5 +1,5 @@
 {
-	"name": "CisBetaAPI_planner",
+	"name": "CisBeta_REST_Job_Planner",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "CisBetaAPI",

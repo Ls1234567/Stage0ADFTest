@@ -1,5 +1,5 @@
 {
-	"name": "CisBetaJob",
+	"name": "CisBeta_REST_Job",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "CisBetaAPI",

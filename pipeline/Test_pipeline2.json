@@ -43,7 +43,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CisBetaJob",
+						"referenceName": "CisBeta_REST_Job",
 						"type": "DatasetReference"
 					}
 				],
