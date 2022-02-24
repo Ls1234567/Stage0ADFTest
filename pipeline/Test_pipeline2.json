@@ -30,10 +30,182 @@
 						"mappings": [
 							{
 								"source": {
+									"path": "$['Timestamp']"
+								},
+								"sink": {
+									"name": "Timestamp",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['WorkflowSettings']"
+								},
+								"sink": {
+									"name": "SettingsJson",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['WorkflowParameters']"
+								},
+								"sink": {
+									"name": "ParametersJson",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
 									"path": "$['Id']"
 								},
 								"sink": {
-									"name": "JobId"
+									"name": "JobId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ParentId']"
+								},
+								"sink": {
+									"name": "ParentId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['RootId']"
+								},
+								"sink": {
+									"name": "RootId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['DisplayName']"
+								},
+								"sink": {
+									"name": "DisplayName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['JobType']"
+								},
+								"sink": {
+									"name": "JobType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ServiceHostCapability']"
+								},
+								"sink": {
+									"name": "ServiceHostCapability",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['CreatedDate']"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['StartDate']"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['FinishDate']"
+								},
+								"sink": {
+									"name": "FinishDate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['DisplayStatus']"
+								},
+								"sink": {
+									"name": "StateName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['TotalTaskCount']"
+								},
+								"sink": {
+									"name": "TotalTaskCount",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['FinishedTaskCount']"
+								},
+								"sink": {
+									"name": "FinishedTaskCount",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['BlockedTaskCount']"
+								},
+								"sink": {
+									"name": "BlockedTaskCount",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['PackageId']"
+								},
+								"sink": {
+									"name": "PackageId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Workflow']"
+								},
+								"sink": {
+									"name": "Workflow",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['HostName']"
+								},
+								"sink": {
+									"name": "HostName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ServiceHostLocation']"
+								},
+								"sink": {
+									"name": "ServiceHostLocation",
+									"type": "String"
 								}
 							}
 						],
