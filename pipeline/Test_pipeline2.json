@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Task from OData to Kusto",
+				"name": "Copy Job from REST API to Kusto",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -30,151 +30,26 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "['TaskId']"
-								},
-								"sink": {
-									"name": "TaskId"
-								}
-							},
-							{
-								"source": {
-									"path": "['JobId']"
+									"path": "$['Id']"
 								},
 								"sink": {
 									"name": "JobId"
 								}
-							},
-							{
-								"source": {
-									"path": "['TaskName']"
-								},
-								"sink": {
-									"name": "TaskName"
-								}
-							},
-							{
-								"source": {
-									"path": "['DisplayName']"
-								},
-								"sink": {
-									"name": "DisplayName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['ExternalId']"
-								},
-								"sink": {
-									"name": "ExternalId"
-								}
-							},
-							{
-								"source": {
-									"path": "['ExternalSystemType']"
-								},
-								"sink": {
-									"name": "ExternalSystemType"
-								}
-							},
-							{
-								"source": {
-									"path": "['Component']"
-								},
-								"sink": {
-									"name": "Component"
-								}
-							},
-							{
-								"source": {
-									"path": "['OrderId']"
-								},
-								"sink": {
-									"name": "OrderId"
-								}
-							},
-							{
-								"source": {
-									"path": "['CreatedDate']"
-								},
-								"sink": {
-									"name": "CreatedDate"
-								}
-							},
-							{
-								"source": {
-									"path": "['StartDate']"
-								},
-								"sink": {
-									"name": "StartDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['FinishDate']"
-								},
-								"sink": {
-									"name": "FinishDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['StateName']"
-								},
-								"sink": {
-									"name": "StateName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['CustomState']"
-								},
-								"sink": {
-									"name": "CustomState"
-								}
-							},
-							{
-								"source": {
-									"path": "['TaskType']"
-								},
-								"sink": {
-									"name": "TaskType"
-								}
-							},
-							{
-								"source": {
-									"path": "['AssignedTo']"
-								},
-								"sink": {
-									"name": "AssignedTo"
-								}
-							},
-							{
-								"source": {
-									"path": "['Timestamp']"
-								},
-								"sink": {
-									"name": "Timestamp",
-									"type": "DateTime"
-								}
 							}
 						],
-						"collectionReference": "$['value']",
-						"mapComplexValuesToString": false
+						"collectionReference": "",
+						"mapComplexValuesToString": true
 					}
 				},
 				"inputs": [
 					{
-						"referenceName": "ODataTask",
+						"referenceName": "CisBetaJob",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_INT_Temp_Task",
+						"referenceName": "Kusto_INT_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
