@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Job from REST API to Kusto",
-				"type": "Copy",
+				"name": "Query all job ids",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -16,215 +16,261 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:01:40",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET"
+						"type": "AzureDataExplorerSource",
+						"query": "CIS_Metadata_Job | JobId",
+						"queryTimeout": "00:10:00"
 					},
-					"sink": {
-						"type": "AzureDataExplorerSink"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"path": "$['Timestamp']"
-								},
-								"sink": {
-									"name": "Timestamp",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "$['WorkflowSettings']"
-								},
-								"sink": {
-									"name": "SettingsJson",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['WorkflowParameters']"
-								},
-								"sink": {
-									"name": "ParametersJson",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Id']"
-								},
-								"sink": {
-									"name": "JobId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['ParentId']"
-								},
-								"sink": {
-									"name": "ParentId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['RootId']"
-								},
-								"sink": {
-									"name": "RootId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['DisplayName']"
-								},
-								"sink": {
-									"name": "DisplayName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['JobType']"
-								},
-								"sink": {
-									"name": "JobType",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['ServiceHostCapability']"
-								},
-								"sink": {
-									"name": "ServiceHostCapability",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['CreatedDate']"
-								},
-								"sink": {
-									"name": "CreatedDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "$['StartDate']"
-								},
-								"sink": {
-									"name": "StartDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "$['FinishDate']"
-								},
-								"sink": {
-									"name": "FinishDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "$['DisplayStatus']"
-								},
-								"sink": {
-									"name": "StateName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['TotalTaskCount']"
-								},
-								"sink": {
-									"name": "TotalTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "$['FinishedTaskCount']"
-								},
-								"sink": {
-									"name": "FinishedTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "$['BlockedTaskCount']"
-								},
-								"sink": {
-									"name": "BlockedTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "$['PackageId']"
-								},
-								"sink": {
-									"name": "PackageId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Workflow']"
-								},
-								"sink": {
-									"name": "Workflow",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['HostName']"
-								},
-								"sink": {
-									"name": "HostName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['ServiceHostLocation']"
-								},
-								"sink": {
-									"name": "ServiceHostLocation",
-									"type": "String"
-								}
-							}
-						],
-						"collectionReference": "",
-						"mapComplexValuesToString": true
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "CisBeta_REST_Job",
+					"dataset": {
+						"referenceName": "Kusto_INT_Job",
 						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Add all JobIds",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Query all job ids",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
-				"outputs": [
-					{
-						"referenceName": "Kusto_INT_Temp_Job",
-						"type": "DatasetReference"
-					}
-				]
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Query all job ids').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Task from REST API to Kusto",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "RestSource",
+									"httpRequestTimeout": "00:01:40",
+									"requestInterval": "00.00:00:00.010",
+									"requestMethod": "GET"
+								},
+								"sink": {
+									"type": "AzureDataExplorerSink"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"path": "$['Timestamp']"
+											},
+											"sink": {
+												"name": "Timestamp",
+												"type": "DateTime"
+											}
+										},
+										{
+											"source": {
+												"path": "$['WorkflowSettings']"
+											},
+											"sink": {
+												"name": "SettingsJson",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['WorkflowParameters']"
+											},
+											"sink": {
+												"name": "ParametersJson",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['Id']"
+											},
+											"sink": {
+												"name": "JobId",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['ParentId']"
+											},
+											"sink": {
+												"name": "ParentId",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['RootId']"
+											},
+											"sink": {
+												"name": "RootId",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['DisplayName']"
+											},
+											"sink": {
+												"name": "DisplayName",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['JobType']"
+											},
+											"sink": {
+												"name": "JobType",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['ServiceHostCapability']"
+											},
+											"sink": {
+												"name": "ServiceHostCapability",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['CreatedDate']"
+											},
+											"sink": {
+												"name": "CreatedDate",
+												"type": "DateTime"
+											}
+										},
+										{
+											"source": {
+												"path": "$['StartDate']"
+											},
+											"sink": {
+												"name": "StartDate",
+												"type": "DateTime"
+											}
+										},
+										{
+											"source": {
+												"path": "$['FinishDate']"
+											},
+											"sink": {
+												"name": "FinishDate",
+												"type": "DateTime"
+											}
+										},
+										{
+											"source": {
+												"path": "$['DisplayStatus']"
+											},
+											"sink": {
+												"name": "StateName",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['TotalTaskCount']"
+											},
+											"sink": {
+												"name": "TotalTaskCount",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['FinishedTaskCount']"
+											},
+											"sink": {
+												"name": "FinishedTaskCount",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['BlockedTaskCount']"
+											},
+											"sink": {
+												"name": "BlockedTaskCount",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['PackageId']"
+											},
+											"sink": {
+												"name": "PackageId",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['Workflow']"
+											},
+											"sink": {
+												"name": "Workflow",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['HostName']"
+											},
+											"sink": {
+												"name": "HostName",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['ServiceHostLocation']"
+											},
+											"sink": {
+												"name": "ServiceHostLocation",
+												"type": "String"
+											}
+										}
+									],
+									"collectionReference": "",
+									"mapComplexValuesToString": true
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CisBeta_REST_Job",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Kusto_INT_Temp_Task",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"annotations": []

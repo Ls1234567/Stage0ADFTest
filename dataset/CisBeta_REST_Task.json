@@ -1,0 +1,15 @@
+{
+	"name": "CisBeta_REST_Task",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CisBetaAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/cis.client.svc/Public/M365AGCBuildout/GenericJob"
+		},
+		"schema": []
+	}
+}
