@@ -37,213 +37,30 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "['JobId']"
+									"path": "$['Id']"
 								},
 								"sink": {
-									"name": "JobId",
-									"type": "String"
+									"name": "JobId"
 								}
 							},
 							{
 								"source": {
-									"path": "['ParentId']"
+									"path": "$['ParentId']"
 								},
 								"sink": {
-									"name": "ParentId",
-									"type": "String"
+									"name": "ParentId"
 								}
 							},
 							{
 								"source": {
-									"path": "['RootId']"
+									"path": "$['RootId']"
 								},
 								"sink": {
-									"name": "RootId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['DisplayName']"
-								},
-								"sink": {
-									"name": "DisplayName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Cloud']"
-								},
-								"sink": {
-									"name": "Cloud",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Tenant']"
-								},
-								"sink": {
-									"name": "Tenant",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['JobType']"
-								},
-								"sink": {
-									"name": "JobType",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['ServiceHostCapability']"
-								},
-								"sink": {
-									"name": "ServiceHostCapability",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['CreatedDate']"
-								},
-								"sink": {
-									"name": "CreatedDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['StartDate']"
-								},
-								"sink": {
-									"name": "StartDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['FinishDate']"
-								},
-								"sink": {
-									"name": "FinishDate",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['StateName']"
-								},
-								"sink": {
-									"name": "StateName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['PackageId']"
-								},
-								"sink": {
-									"name": "PackageId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Workflow']"
-								},
-								"sink": {
-									"name": "Workflow",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['HostName']"
-								},
-								"sink": {
-									"name": "HostName",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['ServiceHostLocation']"
-								},
-								"sink": {
-									"name": "ServiceHostLocation",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Timestamp']"
-								},
-								"sink": {
-									"name": "Timestamp",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"path": "['Parameters']['TotalTaskCount']"
-								},
-								"sink": {
-									"name": "TotalTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "['Parameters']['FinishedTaskCount']"
-								},
-								"sink": {
-									"name": "FinishedTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "['Parameters']['BlockedTaskCount']"
-								},
-								"sink": {
-									"name": "BlockedTaskCount",
-									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "['Parameters']"
-								},
-								"sink": {
-									"name": "ParametersJson",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Settings']"
-								},
-								"sink": {
-									"name": "SettingsJson",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Settings']['MdmId']"
-								},
-								"sink": {
-									"name": "MdmId",
-									"type": "String"
+									"name": "RootId"
 								}
 							}
 						],
-						"collectionReference": "$['value']",
+						"collectionReference": "",
 						"mapComplexValuesToString": true
 					}
 				},
