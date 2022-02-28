@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | take 3 | project JobId",
+						"query": "CIS_Metadata_Job | take 1 | project JobId",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
@@ -79,8 +79,8 @@
 							}
 						},
 						{
-							"name": "Append Tasks",
-							"type": "AppendVariable",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [
 								{
 									"activity": "Get Tasks from REST API",
@@ -89,14 +89,72 @@
 									]
 								}
 							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "Tasks",
-								"value": {
-									"value": "@array(activity('Get Tasks from REST API').output.Response)",
-									"type": "Expression"
+								"source": {
+									"type": "JsonSource",
+									"additionalColumns": [
+										{
+											"name": "Tasks",
+											"value": {
+												"value": "@activity('Get Tasks from REST API').output.Response",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureFileStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "JsonReadSettings"
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureFileStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings",
+										"filePattern": "arrayOfObjects"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"path": "$['Task']"
+											},
+											"sink": {
+												"path": "out"
+											}
+										}
+									]
 								}
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "CisBetaTasksJson",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "CisBetaTasksJson",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
