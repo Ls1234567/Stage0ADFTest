@@ -422,12 +422,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365AGCBuildout' or JobType='M365BuildoutPlanner'",
+						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365AGCBuildout'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Sql_Beta_Job",
+						"referenceName": "Sql_Prod_Job",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
