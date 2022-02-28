@@ -30,14 +30,7 @@
 			{
 				"name": "Add all JobIds",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Query all job ids",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -46,8 +39,8 @@
 					},
 					"activities": [
 						{
-							"name": "Copy Task from REST API to Kusto",
-							"type": "Copy",
+							"name": "Get Jobs from OData",
+							"type": "WebActivity",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
@@ -58,221 +51,83 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "RestSource",
-									"httpRequestTimeout": "00:01:40",
-									"requestInterval": "00.00:00:00.010",
-									"requestMethod": "GET"
-								},
-								"sink": {
-									"type": "AzureDataExplorerSink"
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"path": "$['Timestamp']"
-											},
-											"sink": {
-												"name": "Timestamp",
-												"type": "DateTime"
-											}
-										},
-										{
-											"source": {
-												"path": "$['WorkflowSettings']"
-											},
-											"sink": {
-												"name": "SettingsJson",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['WorkflowParameters']"
-											},
-											"sink": {
-												"name": "ParametersJson",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['Id']"
-											},
-											"sink": {
-												"name": "JobId",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['ParentId']"
-											},
-											"sink": {
-												"name": "ParentId",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['RootId']"
-											},
-											"sink": {
-												"name": "RootId",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['DisplayName']"
-											},
-											"sink": {
-												"name": "DisplayName",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['JobType']"
-											},
-											"sink": {
-												"name": "JobType",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['ServiceHostCapability']"
-											},
-											"sink": {
-												"name": "ServiceHostCapability",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['CreatedDate']"
-											},
-											"sink": {
-												"name": "CreatedDate",
-												"type": "DateTime"
-											}
-										},
-										{
-											"source": {
-												"path": "$['StartDate']"
-											},
-											"sink": {
-												"name": "StartDate",
-												"type": "DateTime"
-											}
-										},
-										{
-											"source": {
-												"path": "$['FinishDate']"
-											},
-											"sink": {
-												"name": "FinishDate",
-												"type": "DateTime"
-											}
-										},
-										{
-											"source": {
-												"path": "$['DisplayStatus']"
-											},
-											"sink": {
-												"name": "StateName",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['TotalTaskCount']"
-											},
-											"sink": {
-												"name": "TotalTaskCount",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
-												"path": "$['FinishedTaskCount']"
-											},
-											"sink": {
-												"name": "FinishedTaskCount",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
-												"path": "$['BlockedTaskCount']"
-											},
-											"sink": {
-												"name": "BlockedTaskCount",
-												"type": "Int32"
-											}
-										},
-										{
-											"source": {
-												"path": "$['PackageId']"
-											},
-											"sink": {
-												"name": "PackageId",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['Workflow']"
-											},
-											"sink": {
-												"name": "Workflow",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['HostName']"
-											},
-											"sink": {
-												"name": "HostName",
-												"type": "String"
-											}
-										},
-										{
-											"source": {
-												"path": "$['ServiceHostLocation']"
-											},
-											"sink": {
-												"name": "ServiceHostLocation",
-												"type": "String"
-											}
-										}
-									],
-									"collectionReference": "",
-									"mapComplexValuesToString": true
+								"url": "https://beta-cps.trafficmanager.net/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=Timestamp%20gt%202021-10-15T00:00:00Z%20and%20OwningTeamId%20eq%20'M365FleetAGCEngineering'",
+								"method": "GET",
+								"headers": {
+									"Authorization": {
+										"value": "Bearer @{activity('Get Bearer Token').output.access_token}",
+										"type": "Expression"
+									}
 								}
-							},
-							"inputs": [
-								{
-									"referenceName": "CisBeta_REST_Job",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "Kusto_INT_Temp_Task",
-									"type": "DatasetReference"
-								}
-							]
+							}
 						}
 					]
 				}
+			},
+			{
+				"name": "Get ClientSecret",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://fleetagcorchestration.vault.azure.net/secrets/ClientSecret/4d525ad30a5f4ecb962fcb9142d116dd?api-version=7.0",
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Get Bearer Token",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Get ClientSecret",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://login.microsoftonline.com/microsoft.onmicrosoft.com/oauth2/token",
+					"method": "POST",
+					"headers": {
+						"Content-type": "application/x-www-form-urlencoded"
+					},
+					"body": {
+						"value": "grant_type=client_credentials&client_id=ed857452-e380-4621-a248-a2764e8cb70c&resource=http://microsoft.com/beta-cps&client_secret=@{activity('Get ClientSecret').output.value}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
 			}
 		],
+		"variables": {
+			"AccessToken": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
