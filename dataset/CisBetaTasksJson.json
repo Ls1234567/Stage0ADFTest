@@ -1,0 +1,19 @@
+{
+	"name": "CisBetaTasksJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CisJsonFile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"fileName": "CisBetaTasks.json",
+				"folderPath": "CisBeta"
+			}
+		},
+		"schema": {}
+	}
+}
