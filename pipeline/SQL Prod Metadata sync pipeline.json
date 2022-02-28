@@ -1,5 +1,5 @@
 {
-	"name": "SQL Beta Metadata sync pipeline",
+	"name": "SQL Prod Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{

@@ -1,8 +1,8 @@
 {
-	"name": "Sql_Beta_Job",
+	"name": "Sql_Prod_Job",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzcisBeta",
+			"referenceName": "AzcisProd",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
