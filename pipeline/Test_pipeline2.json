@@ -77,6 +77,26 @@
 									}
 								}
 							}
+						},
+						{
+							"name": "Append Tasks",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Get Tasks from REST API",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Tasks",
+								"value": {
+									"value": "@array(activity('Get Tasks from REST API').output.Response)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -157,6 +177,9 @@
 		"variables": {
 			"AccessToken": {
 				"type": "String"
+			},
+			"Tasks": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
