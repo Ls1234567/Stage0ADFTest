@@ -5,7 +5,14 @@
 			{
 				"name": "Query all job ids",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set AccessToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -28,9 +35,16 @@
 				}
 			},
 			{
-				"name": "Add all JobIds",
+				"name": "Sync tasks by JobId",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Query all job ids",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -39,7 +53,7 @@
 					},
 					"activities": [
 						{
-							"name": "Get Jobs from OData",
+							"name": "Get Tasks from REST API",
 							"type": "WebActivity",
 							"dependsOn": [],
 							"policy": {
@@ -51,11 +65,14 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"url": "https://beta-cps.trafficmanager.net/cis.odata.svc/Public/M365AGCBuildout/Jobs?$filter=Timestamp%20gt%202021-10-15T00:00:00Z%20and%20OwningTeamId%20eq%20'M365FleetAGCEngineering'",
+								"url": {
+									"value": "@concat('https://beta-cps.trafficmanager.net/cis.client.svc/Public/M365AGCBuildout/GenericTask/', item().JobId)",
+									"type": "Expression"
+								},
 								"method": "GET",
 								"headers": {
 									"Authorization": {
-										"value": "Bearer @{activity('Get Bearer Token').output.access_token}",
+										"value": "@concat('Bearer ', variables('AccessToken'))",
 										"type": "Expression"
 									}
 								}
@@ -117,10 +134,24 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "Set AccessToken",
 				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": []
+				"dependsOn": [
+					{
+						"activity": "Get Bearer Token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "AccessToken",
+					"value": {
+						"value": "@activity('Get Bearer Token').output.access_token",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
