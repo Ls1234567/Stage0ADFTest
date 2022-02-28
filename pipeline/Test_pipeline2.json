@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | JobId",
+						"query": "CIS_Metadata_Job | take 3 | project JobId",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
