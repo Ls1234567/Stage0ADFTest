@@ -83,7 +83,7 @@
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Get Tasks from REST API",
+									"activity": "Set tasks",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -104,7 +104,7 @@
 										{
 											"name": "Tasks",
 											"value": {
-												"value": "@activity('Get Tasks from REST API').output.Response",
+												"value": "@variables('Tasks')",
 												"type": "Expression"
 											}
 										}
@@ -124,8 +124,7 @@
 										"type": "AzureFileStorageWriteSettings"
 									},
 									"formatSettings": {
-										"type": "JsonWriteSettings",
-										"filePattern": "arrayOfObjects"
+										"type": "JsonWriteSettings"
 									}
 								},
 								"enableStaging": false,
@@ -134,10 +133,10 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['Task']"
+												"path": "Tasks"
 											},
 											"sink": {
-												"path": "out"
+												"path": "outval"
 											}
 										}
 									]
@@ -155,6 +154,26 @@
 									"type": "DatasetReference"
 								}
 							]
+						},
+						{
+							"name": "Set tasks",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get Tasks from REST API",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Tasks",
+								"value": {
+									"value": "@activity('Get Tasks from REST API').output.Response",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
