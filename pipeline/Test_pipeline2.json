@@ -77,103 +77,6 @@
 									}
 								}
 							}
-						},
-						{
-							"name": "Copy data1",
-							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Set tasks",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "JsonSource",
-									"additionalColumns": [
-										{
-											"name": "Tasks",
-											"value": {
-												"value": "@variables('Tasks')",
-												"type": "Expression"
-											}
-										}
-									],
-									"storeSettings": {
-										"type": "AzureFileStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "JsonReadSettings"
-									}
-								},
-								"sink": {
-									"type": "JsonSink",
-									"storeSettings": {
-										"type": "AzureFileStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "JsonWriteSettings"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"path": "Tasks"
-											},
-											"sink": {
-												"path": "outval"
-											}
-										}
-									]
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "CisBetaTasksJson",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "CisBetaTasksJson",
-									"type": "DatasetReference"
-								}
-							]
-						},
-						{
-							"name": "Set tasks",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Get Tasks from REST API",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "Tasks",
-								"value": {
-									"value": "@activity('Get Tasks from REST API').output.Response",
-									"type": "Expression"
-								}
-							}
 						}
 					]
 				}
@@ -256,7 +159,7 @@
 				"type": "String"
 			},
 			"Tasks": {
-				"type": "Array"
+				"type": "String"
 			}
 		},
 		"annotations": []
