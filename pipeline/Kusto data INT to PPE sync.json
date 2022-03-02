@@ -961,12 +961,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Id",
+									"name": "IncidentId",
 									"type": "String",
 									"physicalType": "string"
 								},
 								"sink": {
-									"name": "Id",
+									"name": "IncidentId",
 									"type": "String",
 									"physicalType": "string"
 								}

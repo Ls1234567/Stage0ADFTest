@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".show functions",
+					"command": ".rename column Temp_CIS_Metadata_Incident.Id to IncidentId",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
