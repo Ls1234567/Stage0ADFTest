@@ -1019,8 +1019,7 @@
 									"physicalType": "nvarchar"
 								},
 								"sink": {
-									"name": "Id",
-									"type": "String",
+									"name": "IncidentId",
 									"physicalType": "string"
 								}
 							},
