@@ -1,0 +1,19 @@
+{
+	"name": "CisBetaTaskOut",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CisFileStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"fileName": "CisBetaTasksOut.json",
+				"folderPath": "CisBeta"
+			}
+		},
+		"schema": {}
+	}
+}
