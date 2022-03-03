@@ -3,31 +3,49 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Kusto prod lookup",
-				"type": "Lookup",
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Incident | count",
-						"queryTimeout": "00:10:00"
+					"items": {
+						"value": "@json(pipeline().parameters.Tasks)",
+						"type": "Expression"
 					},
-					"dataset": {
-						"referenceName": "Kusto_PROD_Temp_Job",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
+					"activities": [
+						{
+							"name": "Ingest into INT Temp_CIS_Metadata_Task",
+							"type": "AzureDataExplorerCommand",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"command": {
+									"value": "@concat('.ingest inline into table TestJson with(format=\"json\", ingestionMapping = \"[{\\\"column\\\":\\\"TaskId\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.TaskId\\\"}},{\\\"column\\\":\\\"JobId\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.JobId\\\"}},{\\\"column\\\":\\\"TaskName\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.TaskName\\\"}},{\\\"column\\\":\\\"DisplayName\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.DisplayName\\\"}},{\\\"column\\\":\\\"ExternalId\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.ExternalId\\\"}},{\\\"column\\\":\\\"ExternalSystemType\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.ExternalSystemType\\\"}},{\\\"column\\\":\\\"Component\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.Component\\\"}},{\\\"column\\\":\\\"OrderId\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.OrderId\\\"}},{\\\"column\\\":\\\"CreatedDate\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.CreatedDate\\\"}},{\\\"column\\\":\\\"StartDate\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.StartDate\\\"}},{\\\"column\\\":\\\"FinishDate\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.FinishDate\\\"}},{\\\"column\\\":\\\"StateName\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.StateName\\\"}},{\\\"column\\\":\\\"CustomState\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.CustomState\\\"}},{\\\"column\\\":\\\"TaskType\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.TaskType\\\"}},{\\\"column\\\":\\\"AssignedTo\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.AssignedTo\\\"}},{\\\"column\\\":\\\"LastBlockedReason\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.LastBlockedReason\\\"}},{\\\"column\\\":\\\"Timestamp\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.Timestamp\\\"}},{\\\"column\\\":\\\"StartWaitingDate\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.StartWaitingDate\\\"}},{\\\"column\\\":\\\"FinishWaitingDate\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.FinishWaitingDate\\\"}},{\\\"column\\\":\\\"TaskGroupPath\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.TaskGroupPath\\\"}},{\\\"column\\\":\\\"Notes\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.Notes\\\"}},{\\\"column\\\":\\\"OwningTeamId\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.OwningTeamId\\\"}},{\\\"column\\\":\\\"ProgressInfo\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.ProgressInfo\\\"}},{\\\"column\\\":\\\"LogUri\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.LogUri\\\"}},{\\\"column\\\":\\\"ProgressReportLink\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.ProgressReportLink\\\"}},{\\\"column\\\":\\\"IngestionTime\\\", \\\"Properties\\\":{\\\"Path\\\":\\\"$.IngestionTime\\\"}}]\") <| ', item())",
+									"type": "Expression"
+								},
+								"commandTimeout": "00:20:00"
+							},
+							"linkedServiceName": {
+								"referenceName": "M365OpsCenterInt",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
 				}
 			}
 		],
+		"parameters": {
+			"Tasks": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
