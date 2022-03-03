@@ -1,5 +1,5 @@
 {
-	"name": "CIS REST API Task Metadata sync pipeline",
+	"name": "Test CIS REST API Task Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | take 3 | project JobId",
+						"query": "CIS_Metadata_Job | take 6 | project JobId",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
@@ -81,8 +81,8 @@
 							}
 						},
 						{
-							"name": "Execute Ingest into INT temp task",
-							"type": "ExecutePipeline",
+							"name": "Append Tasks",
+							"type": "AppendVariable",
 							"dependsOn": [
 								{
 									"activity": "Get Tasks from REST API",
@@ -93,16 +93,10 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"pipeline": {
-									"referenceName": "Ingest into INT temp task",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"Tasks": {
-										"value": "@json(activity('Get Tasks from REST API').output.Response)",
-										"type": "Expression"
-									}
+								"variableName": "Tasks",
+								"value": {
+									"value": "@substring(string(json(activity('Get Tasks from REST API').output.Response)), 1, sub(length(string(json(activity('Get Tasks from REST API').output.Response))), 2))",
+									"type": "Expression"
 								}
 							}
 						}
@@ -112,14 +106,7 @@
 			{
 				"name": "Get ClientSecret",
 				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "Assure table Temp_CIS_Metadata_Task clean",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -189,29 +176,8 @@
 				}
 			},
 			{
-				"name": "Assure table Temp_CIS_Metadata_Task clean",
-				"type": "AzureDataExplorerCommand",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"command": ".clear table Temp_CIS_Metadata_Task data",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
-				"type": "AzureDataExplorerCommand",
+				"name": "Set TasksJson",
+				"type": "SetVariable",
 				"dependsOn": [
 					{
 						"activity": "Sync tasks by JobId to Temp table",
@@ -220,49 +186,39 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".rename tables CIS_Metadata_Task=Temp_CIS_Metadata_Task ifexists, Temp_CIS_Metadata_Task=CIS_Metadata_Task",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
+					"variableName": "TasksJson",
+					"value": {
+						"value": "@concat('[', join(variables('Tasks'), ','), ']')",
+						"type": "Expression"
+					}
 				}
 			},
 			{
-				"name": "Clear table Temp_CIS_Metadata_Task",
-				"type": "AzureDataExplorerCommand",
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+						"activity": "Set TasksJson",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".clear table Temp_CIS_Metadata_Task data",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
-					"type": "LinkedServiceReference"
+					"pipeline": {
+						"referenceName": "Ingest into INT temp task",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Tasks": {
+							"value": "@json(variables('TasksJson'))",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
@@ -272,6 +228,9 @@
 			},
 			"Tasks": {
 				"type": "Array"
+			},
+			"TasksJson": {
+				"type": "String"
 			}
 		},
 		"annotations": []

@@ -12,6 +12,7 @@
 						"value": "@array(pipeline().parameters.Tasks)",
 						"type": "Expression"
 					},
+					"batchCount": 100,
 					"activities": [
 						{
 							"name": "Ingest into INT Temp_CIS_Metadata_Task",
