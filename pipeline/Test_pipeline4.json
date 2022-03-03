@@ -3,27 +3,30 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Kusto test",
-				"type": "AzureDataExplorerCommand",
+				"name": "Append variable1",
+				"type": "AppendVariable",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".rename column Temp_CIS_Metadata_Incident.Id to IncidentId",
-					"commandTimeout": "00:20:00"
-				},
-				"linkedServiceName": {
-					"referenceName": "M365OpsCenterprod",
-					"type": "LinkedServiceReference"
+					"variableName": "test",
+					"value": {
+						"value": "@createArray(pipeline().parameters.tasks)[0]",
+						"type": "Expression"
+					}
 				}
 			}
 		],
+		"parameters": {
+			"tasks": {
+				"type": "string",
+				"defaultValue": "\"[{\\\"ETA\\\":null,\\\"TaskGroupPath\\\":null,\\\"ETag\\\":\\\"W/\\\\\\\"datetime'2022-02-22T19%3A33%3A14.5335815Z'\\\\\\\"\\\",\\\"LastUpdatedBy\\\":\\\"CISBackend\\\",\\\"Operator\\\":null,\\\"ExternalLink\\\":\\\"http://localhost/\\\",\\\"ProgressInfo\\\":\\\"\\\",\\\"ProgressReportLink\\\":\\\"https://ev2portal.azure.net/#buildout/12723a7f-c7d6-42c9-b628-49203801ccdf/Microsoft.BuildoutQuickstart.MyServiceBlueEngine/centralus/5cbc198a-257c-4dc8-b8e0-03b9305302a4?RolloutInfra=Prod;Buildout Status: Succeeded\\\",\\\"LogUri\\\":\\\"https://beta-cps.trafficmanager.net/Public/M365AGCBuildout/logviewer/2517567429794539999_369c3f61-1711-4846-8da6-74ea1354a82d/ev2buildouttask/\\\",\\\"TaskDependencyUniqueName\\\":null,\\\"HasBoundDependency\\\":true,\\\"IncidentIds\\\":null,\\\"IsSubWorkflowStarter\\\":false,\\\"ComponentOwnerId\\\":\\\"\\\",\\\"OwningTeamId\\\":\\\"M365BuildoutOrchestrator\\\",\\\"ExecutionGraphInfo\\\":null,\\\"ActivityType\\\":\\\"Microsoft.M365.Buildout.Workflows.Activities.Ev2.Ev2BuildoutActivity:SDKv2\\\",\\\"Predecessors\\\":[],\\\"Successors\\\":[],\\\"DataSourceLocation\\\":0,\\\"TaskId\\\":\\\"2517567429794539999_369c3f61-1711-4846-8da6-74ea1354a82d;ev2buildouttask\\\",\\\"JobId\\\":\\\"2517567429794539999_369c3f61-1711-4846-8da6-74ea1354a82d\\\",\\\"TaskName\\\":\\\"ev2buildouttask\\\",\\\"Id\\\":\\\"ev2buildouttask\\\",\\\"DisplayName\\\":\\\"Triggering and Polling service buildout via Ev2\\\",\\\"ExternalId\\\":\\\"0\\\",\\\"ExternalSystemType\\\":\\\"Tfs\\\",\\\"Component\\\":\\\"Ev2Workflow\\\",\\\"OrderId\\\":\\\"1\\\",\\\"CreatedDate\\\":\\\"2022-02-22T19:25:43.8702006Z\\\",\\\"StartDate\\\":\\\"2022-02-22T19:25:44.7517079Z\\\",\\\"FinishDate\\\":\\\"2022-02-22T19:33:14.5116295Z\\\",\\\"State\\\":5,\\\"StateName\\\":\\\"Finished\\\",\\\"CustomState\\\":\\\"\\\",\\\"CustomStateReportLink\\\":\\\"\\\",\\\"LastProgressReportTime\\\":null,\\\"Type\\\":1,\\\"TaskType\\\":\\\"Automated\\\",\\\"AssignedTo\\\":\\\"M365BuildoutOrchestrator\\\",\\\"LastBlockedReason\\\":null,\\\"Timestamp\\\":\\\"2022-02-22T19:33:14.5335815+00:00\\\",\\\"StartWaitingDate\\\":\\\"2022-02-22T19:25:44.4798622Z\\\",\\\"FinishWaitingDate\\\":null,\\\"Notes\\\":null,\\\"Incidents\\\":[]}]\""
+			}
+		},
+		"variables": {
+			"test": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }

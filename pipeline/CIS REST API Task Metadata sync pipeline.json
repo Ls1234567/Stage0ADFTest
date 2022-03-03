@@ -1,5 +1,5 @@
 {
-	"name": "Test_pipeline2",
+	"name": "CIS REST API Task Metadata sync pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | take 1 | project JobId",
+						"query": "CIS_Metadata_Job | project JobId",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
@@ -35,7 +35,7 @@
 				}
 			},
 			{
-				"name": "Sync tasks by JobId",
+				"name": "Sync tasks by JobId to Temp table",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -52,6 +52,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
+					"batchCount": 10,
 					"activities": [
 						{
 							"name": "Get Tasks from REST API",
@@ -80,7 +81,7 @@
 							}
 						},
 						{
-							"name": "Execute Pipeline1",
+							"name": "Execute Ingest into INT temp task",
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
@@ -93,13 +94,13 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "Test_pipeline3",
+									"referenceName": "Ingest into INT temp task",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
 								"parameters": {
 									"Tasks": {
-										"value": "@activity('Get Tasks from REST API').output.Response",
+										"value": "@json(activity('Get Tasks from REST API').output.Response)",
 										"type": "Expression"
 									}
 								}
@@ -111,7 +112,14 @@
 			{
 				"name": "Get ClientSecret",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Assure table Temp_CIS_Metadata_Task clean",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -179,14 +187,88 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Assure table Temp_CIS_Metadata_Task clean",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".clear table Temp_CIS_Metadata_Task data",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Sync tasks by JobId to Temp table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".rename tables CIS_Metadata_Task=Temp_CIS_Metadata_Task ifexists, Temp_CIS_Metadata_Task=CIS_Metadata_Task",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Clear table Temp_CIS_Metadata_Task",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [
+					{
+						"activity": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".clear table Temp_CIS_Metadata_Task data",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterInt",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"variables": {
 			"AccessToken": {
 				"type": "String"
-			},
-			"Tasks": {
-				"type": "Array"
 			}
 		},
 		"annotations": []
