@@ -1,5 +1,5 @@
 {
-	"name": "SQL Beta Metadata sync to INT pipeline",
+	"name": "SQL Beta Metadata sync to PPE pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -19,7 +19,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -47,7 +47,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -75,7 +75,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -101,7 +101,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from dbo.Job where JobType='M365AGCBuildout' or JobType='M365BuildoutPlanner'",
+						"sqlReaderQuery": "select * from dbo.Job where JobType='M365AGCBuildout'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -402,7 +402,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_INT_Temp_Job",
+						"referenceName": "Kusto_PPE_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
@@ -422,7 +422,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365AGCBuildout' or JobType='M365BuildoutPlanner'",
+						"sqlReaderQuery": "select JobId from dbo.Job where JobType='M365AGCBuildout'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -491,7 +491,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -519,7 +519,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -547,7 +547,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -915,7 +915,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_INT_Temp_Task",
+						"referenceName": "Kusto_PPE_Temp_Task",
 						"type": "DatasetReference"
 					}
 				]
@@ -944,7 +944,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -972,7 +972,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -1219,7 +1219,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_INT_Temp_Incident",
+						"referenceName": "Kusto_PPE_Temp_Incident",
 						"type": "DatasetReference"
 					}
 				]
@@ -1248,7 +1248,7 @@
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterppe",
 					"type": "LinkedServiceReference"
 				}
 			}
