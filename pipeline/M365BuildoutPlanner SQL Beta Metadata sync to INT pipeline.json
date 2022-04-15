@@ -387,66 +387,6 @@
 				]
 			},
 			{
-				"name": "Query all job ids",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select JobId from dbo.Job where  JobType='M365BuildoutPlanner'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "Sql_Beta_Job",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
-			},
-			{
-				"name": "Add all JobIds",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Query all job ids",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Query all job ids').output.value",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Append JobId",
-							"type": "AppendVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "JobIds",
-								"value": {
-									"value": "@concat('''', item().JobId, '''')",
-									"type": "Expression"
-								}
-							}
-						}
-					]
-				}
-			},
-			{
 				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task",
 				"type": "AzureDataExplorerCommand",
 				"dependsOn": [
@@ -525,7 +465,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.Task where JobId in (@{join(variables('JobIds'), ',')})",
+							"value": "select * from dbo.Task where JobId in (select JobId from dbo.Job where JobType = 'M365BuildoutPlanner')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -922,7 +862,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.Incident where JobId in (@{join(variables('JobIds'), ',')})",
+							"value": "select * from dbo.Incident where JobId in (select JobId from dbo.Job where JobType = 'M365BuildoutPlanner')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -1178,14 +1118,7 @@
 			{
 				"name": "Swap CIS_Metadata_Task and Temp_CIS_Metadata_Task_1",
 				"type": "AzureDataExplorerCommand",
-				"dependsOn": [
-					{
-						"activity": "Add all JobIds",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -1206,14 +1139,7 @@
 			{
 				"name": "Swap CIS_Metadata_Incident Temp_CIS_Metadata_Incident_1",
 				"type": "AzureDataExplorerCommand",
-				"dependsOn": [
-					{
-						"activity": "Add all JobIds",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
