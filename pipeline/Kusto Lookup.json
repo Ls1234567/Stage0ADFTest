@@ -1,0 +1,32 @@
+{
+	"name": "Kusto Lookup",
+	"properties": {
+		"activities": [
+			{
+				"name": "Kusto PPE Lookup",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureDataExplorerSource",
+						"query": "CIS_Metadata_Job | count",
+						"queryTimeout": "00:10:00"
+					},
+					"dataset": {
+						"referenceName": "Kusto_PPE_Job",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
