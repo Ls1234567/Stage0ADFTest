@@ -1,0 +1,29 @@
+{
+	"name": "Kusto control command",
+	"properties": {
+		"activities": [
+			{
+				"name": "Kusto PPE",
+				"type": "AzureDataExplorerCommand",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": ".create-or-alter function with (folder = \"Views\", docstring = \"View to get service job ids and names for API Service.\", skipvalidation = \"true\") \n    View_APIServiceGetServiceTaskEntities(p_JobId: string) {\n        /////////////////////////////////////////////////////\n        //\n        // View_APIServiceGetServiceTaskIdNames(p_JobId='2517682757198309999_a716ea70-42d8-44d6-89bb-7bf732d69a10')\n        /////////////////////////////////////////////////////\n        //\n        let workloadJobIdNames = View_APIServiceGetWorkloadJobIdNames(p_JobId) | where isnotempty(WorkloadJobId);\n        CIS_Metadata_Job\n        | join kind=inner workloadJobIdNames on $left.JobId == $right.WorkloadJobId\n        | union (CIS_Metadata_Job\n        | join kind=inner workloadJobIdNames on $left.ParentId == $right.WorkloadJobId)\n        | join kind=inner (CIS_Metadata_Task\n            | project-rename TaskDisplayName = DisplayName, ServiceStartTime = StartDate, ServiceFinishTime = FinishDate, ServiceCustomState = CustomState, ServiceStateName = StateName) on JobId\n        | join kind=rightouter WorkloadAndServiceMapping on $left.TaskDisplayName == $right.NameInTaskMetadata\n        | where Type == 'Service'\n        | project WorkloadJobId, WorkloadName = ParentName, ReturnValues = tostring(parse_json(SettingsJson)['RuntimeSettings']['ReturnValues']),\n            ServiceTaskId = TaskId, ServiceName = EntityName, ServiceStatus = iff(isnotempty(ServiceCustomState), ServiceCustomState, ServiceStateName), ServiceStartTime, ServiceFinishTime\n        | join kind=rightouter (WorkloadAndServiceMapping | where Type == 'Service')\n            on $left.ServiceName == $right.NameInTaskMetadata and $left.WorkloadName == $right.ParentName\n        | project WorkloadJobId, WorkloadName = ParentName, WorkloadOrder, ReturnValues,\n            ServiceTaskId, ServiceName = EntityName, ServiceOrder = Order, ServiceStatus, ServiceStartTime, ServiceFinishTime,\n            ServiceTimeElapsed = iff(ServiceStatus in (\"Finished\", \"Skipped\"), datetime_diff('minute', ServiceFinishTime, ServiceStartTime),\n                iff(ServiceStatus == \"NotStarted\", 0,\n                datetime_diff('minute', now(), ServiceStartTime)))\n    }",
+					"commandTimeout": "00:20:00"
+				},
+				"linkedServiceName": {
+					"referenceName": "M365OpsCenterppe",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
