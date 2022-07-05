@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "View_APIServiceGetWorkloads(p_JobId='2517483976081149999_ed174f74-804e-4325-9686-99d25a1ed9ac')",
+						"query": "CIS_Metadata_Job | count\n",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
