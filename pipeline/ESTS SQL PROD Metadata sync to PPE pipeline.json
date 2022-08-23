@@ -90,18 +90,6 @@
 							},
 							{
 								"source": {
-									"name": "Tenant",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "Tenant",
-									"type": "String",
-									"physicalType": "string"
-								}
-							},
-							{
-								"source": {
 									"name": "JobType",
 									"type": "String",
 									"physicalType": "nvarchar"
@@ -318,7 +306,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Job",
+						"referenceName": "Kusto_PPE_Temp_Job",
 						"type": "DatasetReference"
 					}
 				]
@@ -326,7 +314,14 @@
 			{
 				"name": "Copy Task from Sql to Kusto",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy Job from Sql to Kusto",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -685,7 +680,14 @@
 			{
 				"name": "Copy Incident from Sql to Kusto",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy Task from Sql to Kusto",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
