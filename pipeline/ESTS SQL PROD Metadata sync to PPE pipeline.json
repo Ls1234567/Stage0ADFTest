@@ -306,7 +306,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Temp_Job",
+						"referenceName": "Kusto_PPE_Job",
 						"type": "DatasetReference"
 					}
 				]

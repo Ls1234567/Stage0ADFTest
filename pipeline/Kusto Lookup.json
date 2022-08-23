@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | count\n",
+						"query": "Temp_CIS_Metadata_Job\n",
 						"queryTimeout": "00:10:00"
 					},
 					"dataset": {
