@@ -314,14 +314,7 @@
 			{
 				"name": "Copy Task from Sql to Kusto",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy Job from Sql to Kusto",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -680,14 +673,7 @@
 			{
 				"name": "Copy Incident from Sql to Kusto",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy Task from Sql to Kusto",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
