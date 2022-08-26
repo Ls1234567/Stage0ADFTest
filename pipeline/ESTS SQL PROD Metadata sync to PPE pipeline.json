@@ -306,7 +306,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Job",
+						"referenceName": "Kusto_PROD_Job",
 						"type": "DatasetReference"
 					}
 				]
@@ -665,7 +665,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Task",
+						"referenceName": "Kusto_PROD_Task",
 						"type": "DatasetReference"
 					}
 				]
@@ -903,7 +903,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Kusto_PPE_Incident",
+						"referenceName": "Kusto_PROD_Incident",
 						"type": "DatasetReference"
 					}
 				]

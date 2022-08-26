@@ -15,11 +15,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".clear table Temp_CIS_Metadata_Job data",
+					"command": ".create-or-alter function with (folder = \"Views\", docstring = \"View to get ESTS Root Jobs Filter Info for API Service.\", skipvalidation = \"true\") \n    View_APIServiceGetEstsRootJobFilterInfo() {\n        /////////////////////////////////////////////////////\n        //\n        //     View_APIServiceGetEstsRootJobFilterInfo()\n        /////////////////////////////////////////////////////\n        //\n        CIS_Metadata_Job\n        | where Workflow in ('ESTS_NewRegion')\n        | project JobId, DisplayName, CreatedTime = CreatedDate, Region = parse_json(ParametersJson)['RegionName']\n    }",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterppe",
+					"referenceName": "M365OpsCenterInt",
 					"type": "LinkedServiceReference"
 				}
 			}

@@ -1,0 +1,80 @@
+{
+	"name": "Kusto_PROD_Incident",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "M365OpsCenterprod",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [
+			{
+				"name": "IncidentId",
+				"type": "string"
+			},
+			{
+				"name": "JobId",
+				"type": "string"
+			},
+			{
+				"name": "TaskId",
+				"type": "string"
+			},
+			{
+				"name": "TaskName",
+				"type": "string"
+			},
+			{
+				"name": "StateName",
+				"type": "string"
+			},
+			{
+				"name": "Timestamp",
+				"type": "datetime"
+			},
+			{
+				"name": "RootCauseTitle",
+				"type": "string"
+			},
+			{
+				"name": "RootCauseBugId",
+				"type": "string"
+			},
+			{
+				"name": "IsExternal",
+				"type": "bool"
+			},
+			{
+				"name": "DisplayName",
+				"type": "string"
+			},
+			{
+				"name": "ExternalSystemType",
+				"type": "string"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime"
+			},
+			{
+				"name": "ResolvedDate",
+				"type": "datetime"
+			},
+			{
+				"name": "IsFiledInFlighting",
+				"type": "bool"
+			},
+			{
+				"name": "AssociatedPackageIds",
+				"type": "string"
+			},
+			{
+				"name": "ExternalLink",
+				"type": "string"
+			}
+		],
+		"typeProperties": {
+			"table": "CIS_Metadata_Incident"
+		}
+	}
+}
