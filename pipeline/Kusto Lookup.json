@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Kusto PPE Lookup",
+				"name": "Kusto Lookup",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
