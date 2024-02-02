@@ -15,11 +15,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": ".create-or-alter function with (folder = \"Views\", docstring = \"View to get ESTS Root Jobs Filter Info for API Service.\", skipvalidation = \"true\") \n    View_APIServiceGetEstsRootJobFilterInfo() {\n        /////////////////////////////////////////////////////\n        //\n        //     View_APIServiceGetEstsRootJobFilterInfo()\n        /////////////////////////////////////////////////////\n        //\n        CIS_Metadata_Job\n        | where Workflow in ('ESTS_NewRegion')\n        | project JobId, DisplayName, CreatedTime = CreatedDate, Region = parse_json(ParametersJson)['RegionName']\n    }",
+					"command": ".create-or-alter function with (folder = \"Views\", docstring = \"View to get workloads for API Service.\", skipvalidation = \"true\")\n    View_APIServiceGetWorkloads(p_JobId:string) {\n        /////////////////////////////////////////////////////\n        //\n        // View_APIServiceGetWorkloads(p_JobId='2517257745377723300_ed2f4050-dfcf-4265-b3df-e5ac96d9e8d9')\n        /////////////////////////////////////////////////////\n        //\n        GetWorkloads_Cache\n        | where RootJobId == p_JobId\n        | order by WorkloadOrder asc, ServiceOrder asc, DeploymentPackageStartTime asc, ServiceTaskOrder asc\n    }",
 					"commandTimeout": "00:20:00"
 				},
 				"linkedServiceName": {
-					"referenceName": "M365OpsCenterInt",
+					"referenceName": "M365OpsCenterprod",
 					"type": "LinkedServiceReference"
 				}
 			}

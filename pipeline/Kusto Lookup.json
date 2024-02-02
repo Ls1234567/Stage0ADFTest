@@ -17,11 +17,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureDataExplorerSource",
-						"query": "CIS_Metadata_Job | count\n",
-						"queryTimeout": "00:10:00"
+						"query": "View_APIServiceGetPackages(p_JobId='2517257745377723300_ed2f4050-dfcf-4265-b3df-e5ac96d9e8d9', p_ServiceTreeId='fae5d495-cd79-41bb-a9e0-c31f9933f030')",
+						"queryTimeout": "01:00:00",
+						"noTruncation": true
 					},
 					"dataset": {
-						"referenceName": "Kusto_PROD_Temp_Job",
+						"referenceName": "Kusto_PPE_Job",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
