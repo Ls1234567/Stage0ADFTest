@@ -1,0 +1,10 @@
+{
+	"name": "WatchtowerInt",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://Watchtower-Certs-INT.vault.azure.net/"
+		}
+	}
+}
