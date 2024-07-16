@@ -1,0 +1,21 @@
+{
+	"name": "WatchtowerIntKusto",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataExplorer",
+		"typeProperties": {
+			"endpoint": "https://adx-rtdp-int-wus3-01.westus3.kusto.windows.net",
+			"tenant": "cdc5aeea-15c5-4db6-b079-fcadd2505dc2",
+			"servicePrincipalId": "354cb375-4398-4f17-9d1a-ce2163cce1e6",
+			"servicePrincipalKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "WatchtowerInt",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "APPCert-INT-Watchtower"
+			},
+			"database": "Watchtower"
+		}
+	}
+}
